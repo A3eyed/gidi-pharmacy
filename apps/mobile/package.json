@@ -31,7 +31,6 @@
     "expo": "^57.0.0",
     "expo-asset": "~57.0.17",
     "expo-audio": "~57.0.5",
-    "expo-av": "^16.0.8",
     "expo-battery": "~57.0.3",
     "expo-blur": "~57.0.3",
     "expo-build-properties": "~57.0.18",
