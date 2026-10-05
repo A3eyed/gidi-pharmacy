@@ -4,7 +4,7 @@
   "private": true,
   "main": "index",
   "scripts": {
-    "eas-build-pre-install": "corepack enable && corepack prepare yarn@4.14.1 --activate && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install"
+    "eas-build-pre-install": "corepack enable && corepack prepare yarn@4.12.0 --activate"
   },
   "dependencies": {
     "@anythingai/app": "0.1.96",
