@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import './global.css';
 import { Providers } from './providers';
+import DesktopInstall from '@/components/DesktopInstall';
 
 export const metadata: Metadata = {
   title: 'GiDi - Smart Pharmacy Management',
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body suppressHydrationWarning>
         <Providers>{children}</Providers>
+        <DesktopInstall />
       </body>
     </html>
   );

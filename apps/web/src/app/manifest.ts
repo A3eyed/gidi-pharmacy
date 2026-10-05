@@ -6,13 +6,15 @@ import type { MetadataRoute } from 'next';
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'GiDi',
+    name: 'GiDi Pharmacy',
     short_name: 'GiDi',
-    description: 'Smart Pharmacy Management',
+    description: 'Pharmacy inventory, sales and Azara. Works on desktop, web and mobile, online and offline.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
     theme_color: '#000000',
+    categories: ['business', 'medical'],
+    id: '/',
     icons: [
       {
         src: '/favicon.png',

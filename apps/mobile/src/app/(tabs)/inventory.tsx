@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronLeft, Plus, Search, Trash2 } from '@/components/Icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authFetch } from '@/utils/auth/getSession';
+import { readOffline, writeOffline } from '@/utils/offline';
 import PharmacyGate, { usePharmacy } from '@/components/PharmacyGate';
 import { formatCurrency, formatShortDate } from '@/utils/format';
 
@@ -395,13 +396,22 @@ function InventoryContent() {
       const params = new URLSearchParams({ pharmacyId: String(pharmacy.id) });
       if (search) params.set('search', search);
       if (filter) params.set('filter', filter);
-      const response = await authFetch(`/api/medications?${params.toString()}`);
-      if (!response.ok) {
-        throw new Error(
-          `When fetching /api/medications, the response was [${response.status}] ${response.statusText}`
-        );
+      const cacheKey = `medications.${pharmacy.id}.${search}.${filter}`;
+      try {
+        const response = await authFetch(`/api/medications?${params.toString()}`);
+        if (!response.ok) {
+          throw new Error(
+            `When fetching /api/medications, the response was [${response.status}] ${response.statusText}`
+          );
+        }
+        const body = await response.json();
+        await writeOffline(cacheKey, body);
+        return body;
+      } catch (error) {
+        const cached = await readOffline<{ medications: Medication[] }>(cacheKey);
+        if (cached) return cached;
+        throw error;
       }
-      return response.json();
     },
   });
 
