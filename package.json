@@ -3,7 +3,7 @@
   "author": "Abdallah Fuseini",
   "private": true,
   "scripts": {
-    "eas-build-pre-install": "corepack enable && corepack prepare yarn@4.12.0 --activate"
+    "eas-build-pre-install": "corepack enable && node .yarn/releases/yarn-4.12.0.cjs --version"
   },
   "workspaces": [
     "apps/*"
@@ -22,6 +22,5 @@
     "react-native": "0.86.3",
     "react-native-screens": "~4.26.0",
     "@expo/log-box": "patch:@expo/log-box@npm%3A57.0.4#~/.yarn/patches/@expo+log-box+57.0.4.patch"
-  },
-  "packageManager": "yarn@4.12.0"
+  }
 }
