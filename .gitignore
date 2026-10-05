@@ -55,3 +55,7 @@ apps/mobile/caches/*
 playwright-report
 test-results
 
+
+# Apple and Play signing keys
+apps/mobile/credentials/
+google-service-account.json
