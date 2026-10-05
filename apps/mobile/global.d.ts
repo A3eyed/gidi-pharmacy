@@ -21,11 +21,6 @@ declare module 'react-native-web/dist/exports/ScrollView' {
   export default ScrollView;
 }
 
-declare module '@anythingai/app/screens/launcher-menu' {
-  const LauncherMenuContainer: React.ComponentType<any>;
-  export default LauncherMenuContainer;
-}
-
 declare module 'lodash' {
   export function merge<T>(...args: T[]): T;
 }
