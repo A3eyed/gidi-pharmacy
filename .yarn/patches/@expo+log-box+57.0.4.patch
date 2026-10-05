@@ -1,0 +1,26 @@
+diff --git a/src/overlay/Overlay.tsx b/src/overlay/Overlay.tsx
+index ef8e76f..b23ab5e 100644
+--- a/src/overlay/Overlay.tsx
++++ b/src/overlay/Overlay.tsx
+@@ -32,6 +32,8 @@ const HEADER_TITLE_MAP: Record<LogLevel, string> = {
+ };
+ 
+ export function LogBoxInspectorContainer() {
++  return null;
++
+   const { selectedLogIndex, logs } = useLogs();
+   const log = logs[selectedLogIndex];
+   if (log == null) {
+diff --git a/src/toast/ErrorToast.tsx b/src/toast/ErrorToast.tsx
+index 11e8bb0..b7d2301 100644
+--- a/src/toast/ErrorToast.tsx
++++ b/src/toast/ErrorToast.tsx
+@@ -16,6 +16,8 @@ import { parseUnexpectedThrownValue } from '../utils/parseUnexpectedThrownValue'
+ import '../overlay/Overlay.module.css';
+ 
+ export function ErrorToastContainer() {
++  return null;
++
+   useRejectionHandler();
+   const { logs, isDisabled } = useLogs();
+ 

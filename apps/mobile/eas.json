@@ -1,0 +1,43 @@
+{
+  "cli": {
+    "version": ">= 15.0.15",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "EXPO_USE_PRECOMPILED_MODULES": "0"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "EXPO_USE_PRECOMPILED_MODULES": "0"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "env": {
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true",
+        "EXPO_USE_PRECOMPILED_MODULES": "0"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "./google-service-account.json",
+        "track": "internal",
+        "releaseStatus": "draft",
+        "changesNotSentForReview": false
+      }
+    }
+  }
+}

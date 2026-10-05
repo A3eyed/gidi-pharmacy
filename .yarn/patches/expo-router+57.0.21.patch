@@ -1,0 +1,354 @@
+diff --git a/assets/native-tabs.module.css b/assets/native-tabs.module.css
+--- a/assets/native-tabs.module.css
++++ b/assets/native-tabs.module.css
+@@ -22,22 +22,27 @@
+ }
+ 
+ .navigationMenuRoot {
+-  top: 24px;
++  bottom: 24px;
+   left: 50%;
+   transform: translateX(-50%);
+   position: fixed;
+   z-index: 10;
+   display: flex;
+-  background-color: var(--expo-router-tabs-background-color, #272727);
+-  height: 40px;
+-  border-radius: 25px;
++  background-color: var(--expo-router-tabs-background-color, rgba(30, 30, 30, 0.88));
++  backdrop-filter: blur(20px);
++  -webkit-backdrop-filter: blur(20px);
++  height: 56px;
++  border-radius: 28px;
+   align-items: center;
+-  justify-content: flex-start;
+-  padding: 5px;
++  justify-content: center;
++  padding: 4px;
+   box-sizing: border-box;
+   margin: 0;
+-  max-width: 90vw;
+-  overflow-x: auto;
++  max-width: 95vw;
++  overflow: hidden;
++  border: 1px solid rgba(255, 255, 255, 0.12);
++  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
++  gap: 2px;
+ }
+ 
+ .navigationMenuTrigger {
+@@ -48,36 +53,64 @@
+   height: 100%;
+   background-color: transparent;
+   border: none;
+-  margin: 0;
+-  height: 100%;
+-  border-radius: 20px;
+-  padding: 0 20px;
++  border-radius: 24px;
++  padding: 6px 16px;
++  transition: background-color 0.2s ease, backdrop-filter 0.2s ease;
+   cursor: pointer;
+-  outline-color: var(--expo-router-tabs-tab-outline-color, #444444);
++  outline-color: var(--expo-router-tabs-tab-outline-color, rgba(255, 255, 255, 0.2));
+   position: relative;
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  justify-content: center;
++  gap: 2px;
++}
++
++.tabIcon {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  color: var(--expo-router-tabs-icon-color, rgba(255, 255, 255, 0.6));
++  font-size: 18px;
++  width: 20px;
++  height: 20px;
++}
++
++.tabIcon > * {
++  color: inherit;
++}
++
++.navigationMenuTrigger[data-state="active"] .tabIcon {
++  color: var(--expo-router-tabs-active-icon-color, #ffffff);
+ }
+ 
+ .navigationMenuTrigger[data-state="active"] {
+-  background-color: var(--expo-router-tabs-active-background-color, #444444);
++  background-color: var(--expo-router-tabs-active-background-color, rgba(255, 255, 255, 0.15));
++  backdrop-filter: blur(10px);
++  -webkit-backdrop-filter: blur(10px);
++  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+ }
+ 
+ .tabText {
+   font-weight: var(--expo-router-tabs-font-weight, 500);
+-  font-size: var(--expo-router-tabs-font-size, 15px);
++  font-size: var(--expo-router-tabs-font-size, 11px);
+   font-family: var(--expo-router-tabs-font-family);
+   font-style: var(--expo-router-tabs-font-style, normal);
+   opacity: var(--expo-router-tabs-text-opacity, 1);
+-  color: var(--expo-router-tabs-text-color, #8b8b8b);
++  color: var(--expo-router-tabs-text-color, rgba(255, 255, 255, 0.6));
+   white-space: nowrap;
+ }
+ 
+ .navigationMenuTrigger[data-state="active"] .tabText {
+   color: var(--expo-router-tabs-active-text-color, #ffffff);
+-  font-size: var(--expo-router-tabs-active-font-size, var(--expo-router-tabs-font-size, 15px));
++}
++
++.navigationMenuTrigger:not([data-state="active"]):hover {
++  background-color: rgba(255, 255, 255, 0.08);
+ }
+ 
+ .navigationMenuTrigger:not([data-state="active"]) .tabText:hover {
+-  opacity: var(--expo-router-tabs-text-hover-opacity, 0.6);
++  opacity: var(--expo-router-tabs-text-hover-opacity, 0.9);
+ }
+ 
+ .tabBadge {
+@@ -107,3 +140,101 @@
+   min-height: var(--expo-router-tabs-local-badge-size);
+   border-radius: calc(var(--expo-router-tabs-local-badge-size) / 2);
+ }
++
++/* More screen styles - Apple Settings inspired */
++.moreScreen {
++  flex: 1;
++  display: flex;
++  flex-direction: column;
++  background-color: #000000;
++  max-height: 100%;
++  max-width: 100%;
++  overflow-y: auto;
++  padding-bottom: 120px;
++}
++
++.moreScreenHeader {
++  padding: 60px 20px 8px;
++}
++
++.moreScreenTitle {
++  font-family: var(--expo-router-tabs-font-family);
++  font-size: 34px;
++  font-weight: 700;
++  color: #ffffff;
++  margin: 0;
++  letter-spacing: 0.37px;
++}
++
++.moreScreenContent {
++  display: flex;
++  flex-direction: column;
++  padding: 20px 20px 0;
++}
++
++.moreScreenGroup {
++  background-color: #1c1c1e;
++  border-radius: 10px;
++  overflow: hidden;
++}
++
++.moreScreenItem {
++  display: flex;
++  align-items: center;
++  gap: 12px;
++  padding: 8px 16px 8px 12px;
++  min-height: 44px;
++  border: none;
++  background-color: transparent;
++  cursor: pointer;
++  font-family: var(--expo-router-tabs-font-family);
++  text-align: left;
++  transition: background-color 0.1s ease;
++  position: relative;
++  width: 100%;
++  box-sizing: border-box;
++}
++
++.moreScreenItem:hover {
++  background-color: rgba(255, 255, 255, 0.08);
++}
++
++.moreScreenItem:active {
++  background-color: rgba(255, 255, 255, 0.12);
++}
++
++/* Separator line between items */
++.moreScreenItem:not(:last-child)::after {
++  content: '';
++  position: absolute;
++  bottom: 0;
++  left: 54px;
++  right: 0;
++  height: 0.5px;
++  background-color: rgba(84, 84, 88, 0.65);
++}
++
++.moreScreenItemIcon {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  width: 30px;
++  height: 30px;
++  border-radius: 6px;
++  background: linear-gradient(180deg, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0) 100%), #636366;
++  color: #ffffff;
++  flex-shrink: 0;
++}
++
++.moreScreenItemLabel {
++  flex: 1;
++  font-size: 17px;
++  font-weight: 400;
++  color: #ffffff;
++  letter-spacing: -0.41px;
++}
++
++.moreScreenItemChevron {
++  color: rgba(235, 235, 245, 0.3);
++  flex-shrink: 0;
++}
+diff --git a/build/getLinkingConfig.js b/build/getLinkingConfig.js
+--- a/build/getLinkingConfig.js
++++ b/build/getLinkingConfig.js
+@@ -8,6 +8,7 @@
+ const getRoutesRedirects_1 = require("./getRoutesRedirects");
+ const linking_1 = require("./link/linking");
+ const native_1 = require("./react-navigation/native");
++const isAnythingApp = expo_modules_core_1.Platform.OS === 'ios' && !globalThis.expo?.modules?.ExpoGo;
+ function getNavigationConfig(routes, metaOnly, { sitemap, notFound }) {
+     const config = (0, getReactNavigationConfig_1.getReactNavigationConfig)(routes, metaOnly);
+     const sitemapRoute = (() => {
+@@ -61,7 +62,10 @@
+             // Expo Router calls `getInitialURL` twice, which may confuse the user if they provide a custom `getInitialURL`.
+             // Therefor we memoize the result.
+             if (!hasCachedInitialUrl) {
+-                if (expo_modules_core_1.Platform.OS === 'web') {
++                if (isAnythingApp) {
++                    initialUrl = '/';
++                }
++                else if (expo_modules_core_1.Platform.OS === 'web') {
+                     initialUrl = serverUrl ?? (0, linking_1.getInitialURL)();
+                 }
+                 else {
+diff --git a/build/link/linking.js b/build/link/linking.js
+--- a/build/link/linking.js
++++ b/build/link/linking.js
+@@ -47,6 +47,7 @@
+ const useLinking_1 = require("../fork/useLinking");
+ const getRoutesRedirects_1 = require("../getRoutesRedirects");
+ const isExpoGo = typeof expo !== 'undefined' && globalThis.expo?.modules?.ExpoGo;
++const isAnythingApp = react_native_1.Platform.OS === 'ios' && !globalThis.expo?.modules?.ExpoGo;
+ // A custom getInitialURL is used on native to ensure the app always starts at
+ // the root path if it's launched from something other than a deep link.
+ // This helps keep the native functionality working like the web functionality.
+@@ -124,7 +125,10 @@
+                 }
+             };
+         }
+-        const subscription = Linking.addEventListener('url', callback);
++        let subscription;
++        if (!isAnythingApp) {
++            subscription = Linking.addEventListener('url', callback);
++        }
+         return () => {
+             // https://github.com/facebook/react-native/commit/6d1aca806cee86ad76de771ed3a1cc62982ebcd7
+             subscription?.remove?.();
+diff --git a/build/native-tabs/NativeTabTrigger.js b/build/native-tabs/NativeTabTrigger.js
+--- a/build/native-tabs/NativeTabTrigger.js
++++ b/build/native-tabs/NativeTabTrigger.js
+@@ -149,6 +149,16 @@
+         if (props.selectedStyle) {
+             options.selectedLabelStyle = react_native_1.StyleSheet.flatten(props.selectedStyle);
+         }
++        const style = react_native_1.StyleSheet.flatten(props.style);
++        if (style?.color) {
++            options.webLabelColor = style.color;
++        }
++        if (props.color) {
++            options.webLabelColor = props.color;
++        }
++        if (options.selectedLabelStyle?.color) {
++            options.webLabelSelectedColor = options.selectedLabelStyle.color;
++        }
+     }
+ }
+ function isNativeTabTrigger(child, contextKey) {
+diff --git a/build/native-tabs/NativeTabsView.web.js b/build/native-tabs/NativeTabsView.web.js
+--- a/build/native-tabs/NativeTabsView.web.js
++++ b/build/native-tabs/NativeTabsView.web.js
+@@ -8,25 +8,30 @@
+ const react_tabs_1 = require("@radix-ui/react-tabs");
+ const react_1 = require("react");
+ const native_tabs_module_css_1 = __importDefault(require("../../assets/native-tabs.module.css"));
++const MAX_VISIBLE_TABS = 5;
+ function NativeTabsView(props) {
+     const { tabs, focusedIndex } = props;
+     const currentTab = tabs[focusedIndex];
+-    const defaultTab = (0, react_1.useMemo)(() => currentTab, 
+-    // We don't specify currentTab here, as we don't want to change the default tab when focusedIndex changes
+-    []);
++    const defaultTab = (0, react_1.useMemo)(() => currentTab, []);
+     const value = currentTab.routeKey;
+-    const items = tabs.map((tab) => ((0, jsx_runtime_1.jsx)(TabItem, { routeKey: tab.routeKey, title: tab.options.title ?? tab.name, badgeValue: tab.options.badgeValue }, tab.routeKey)));
+-    const children = tabs.map((tab) => {
+-        return ((0, jsx_runtime_1.jsx)(react_tabs_1.TabsContent, { value: tab.routeKey, className: native_tabs_module_css_1.default.tabContent, forceMount: true, children: tab.contentRenderer() }, tab.routeKey));
+-    });
+-    return ((0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { className: native_tabs_module_css_1.default.nativeTabsContainer, defaultValue: defaultTab.routeKey, value: value, onValueChange: (value) => {
+-            props.onTabChange({ selectedKey: value, provenance: 0, isNativeAction: true });
+-        }, style: convertNativeTabsPropsToStyleVars(props, currentTab.options), children: [(0, jsx_runtime_1.jsx)(react_tabs_1.TabsList, { "aria-label": "Main", className: native_tabs_module_css_1.default.navigationMenuRoot, children: items }), children] }));
++    const [showMoreScreen, setShowMoreScreen] = (0, react_1.useState)(false);
++    const hasOverflow = tabs.length > MAX_VISIBLE_TABS;
++    const primaryTabs = hasOverflow ? tabs.slice(0, MAX_VISIBLE_TABS - 1) : tabs;
++    const overflowTabs = hasOverflow ? tabs.slice(MAX_VISIBLE_TABS - 1) : [];
++    const items = primaryTabs.map((tab) => ((0, jsx_runtime_1.jsx)(TabItem, { routeKey: tab.routeKey, title: tab.options.title ?? tab.name, badgeValue: tab.options.badgeValue, webIcon: tab.options.webIcon, webIconColor: tab.options.webIconColor, webIconSelectedColor: tab.options.webIconSelectedColor, webLabelColor: tab.options.webLabelColor, webLabelSelectedColor: tab.options.webLabelSelectedColor, isActive: tab.routeKey === value && !showMoreScreen, onClick: () => setShowMoreScreen(false) }, tab.routeKey)));
++    const children = tabs.map((tab) => ((0, jsx_runtime_1.jsx)(react_tabs_1.TabsContent, { value: tab.routeKey, className: native_tabs_module_css_1.default.tabContent, forceMount: true, children: tab.contentRenderer() }, tab.routeKey)));
++    const handleNavigate = (routeKey) => {
++        props.onTabChange({ selectedKey: routeKey, provenance: 0, isNativeAction: true });
++        setShowMoreScreen(false);
++    };
++    return ((0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { className: native_tabs_module_css_1.default.nativeTabsContainer, defaultValue: defaultTab.routeKey, value: value, onValueChange: handleNavigate, style: convertNativeTabsPropsToStyleVars(props, currentTab.options), children: [showMoreScreen && (0, jsx_runtime_1.jsxs)("div", { className: native_tabs_module_css_1.default.moreScreen, children: [(0, jsx_runtime_1.jsx)("div", { className: native_tabs_module_css_1.default.moreScreenHeader, children: (0, jsx_runtime_1.jsx)("h1", { className: native_tabs_module_css_1.default.moreScreenTitle, children: "More" }) }), (0, jsx_runtime_1.jsx)("div", { className: native_tabs_module_css_1.default.moreScreenContent, children: (0, jsx_runtime_1.jsx)("div", { className: native_tabs_module_css_1.default.moreScreenGroup, children: overflowTabs.map((tab) => (0, jsx_runtime_1.jsxs)("button", { type: "button", className: native_tabs_module_css_1.default.moreScreenItem, onClick: () => handleNavigate(tab.routeKey), children: [(0, jsx_runtime_1.jsx)("div", { className: native_tabs_module_css_1.default.moreScreenItemIcon, children: tab.options.webIcon }), (0, jsx_runtime_1.jsx)("span", { className: native_tabs_module_css_1.default.moreScreenItemLabel, children: tab.options.title ?? tab.name }), (0, jsx_runtime_1.jsx)("span", { className: native_tabs_module_css_1.default.moreScreenItemChevron, children: "›" })] }, tab.routeKey)) }) })] }), !showMoreScreen && children, (0, jsx_runtime_1.jsxs)(react_tabs_1.TabsList, { "aria-label": "Main", className: native_tabs_module_css_1.default.navigationMenuRoot, children: [items, hasOverflow && (0, jsx_runtime_1.jsxs)("button", { type: "button", className: native_tabs_module_css_1.default.navigationMenuTrigger, "data-state": showMoreScreen ? "active" : "inactive", onClick: () => setShowMoreScreen(true), children: [(0, jsx_runtime_1.jsx)("span", { className: native_tabs_module_css_1.default.tabIcon, children: "•••" }), (0, jsx_runtime_1.jsx)("span", { className: native_tabs_module_css_1.default.tabText, children: "More" })] })] })] }));
+ }
+ function TabItem(props) {
+-    const { title, badgeValue, routeKey } = props;
++    const { title, badgeValue, routeKey, webIcon, webIconColor, webIconSelectedColor, webLabelColor, webLabelSelectedColor, isActive, onClick } = props;
+     const isBadgeEmpty = badgeValue === ' ';
+-    return ((0, jsx_runtime_1.jsxs)(react_tabs_1.TabsTrigger, { value: routeKey, className: native_tabs_module_css_1.default.navigationMenuTrigger, children: [(0, jsx_runtime_1.jsx)("span", { className: native_tabs_module_css_1.default.tabText, children: title }), badgeValue && ((0, jsx_runtime_1.jsx)("div", { className: `${native_tabs_module_css_1.default.tabBadge} ${isBadgeEmpty ? native_tabs_module_css_1.default.emptyTabBadge : ''}`, children: badgeValue }))] }));
++    const iconColor = isActive ? webIconSelectedColor ?? webIconColor : webIconColor;
++    const labelColor = isActive ? webLabelSelectedColor ?? webLabelColor : webLabelColor;
++    return ((0, jsx_runtime_1.jsxs)(react_tabs_1.TabsTrigger, { value: routeKey, className: native_tabs_module_css_1.default.navigationMenuTrigger, onClick: onClick, children: [webIcon && (0, jsx_runtime_1.jsx)("span", { className: native_tabs_module_css_1.default.tabIcon, style: { color: iconColor }, children: webIcon }), (0, jsx_runtime_1.jsx)("span", { className: native_tabs_module_css_1.default.tabText, style: { color: labelColor }, children: title }), badgeValue && ((0, jsx_runtime_1.jsx)("div", { className: `${native_tabs_module_css_1.default.tabBadge} ${isBadgeEmpty ? native_tabs_module_css_1.default.emptyTabBadge : ''}`, children: badgeValue }))] }));
+ }
+ function convertNativeTabsPropsToStyleVars(props, currentTabOptions) {
+     const vars = {};
+diff --git a/build/native-tabs/utils/optionsIconConverter.js b/build/native-tabs/utils/optionsIconConverter.js
+--- a/build/native-tabs/utils/optionsIconConverter.js
++++ b/build/native-tabs/utils/optionsIconConverter.js
+@@ -4,11 +4,22 @@
+ exports.convertOptionsIconToScreensPropsIcon = convertOptionsIconToScreensPropsIcon;
+ exports.resolveIconRenderingMode = resolveIconRenderingMode;
+ const optionsIconConverter_shared_1 = require("./optionsIconConverter.shared");
++const react_1 = require("react");
+ function appendIconOptions(options, props) {
+     if ('src' in props && props.src) {
+         (0, optionsIconConverter_shared_1.applyIconSrcOptions)(options, props);
++        const srcValue = typeof props.src === 'object' && 'selected' in props.src ? props.src.default : props.src;
++        if ((0, react_1.isValidElement)(srcValue)) {
++            options.webIcon = srcValue;
++        }
+     }
+     (0, optionsIconConverter_shared_1.applySelectedColor)(options, props.selectedColor);
++    if (props.color) {
++        options.webIconColor = props.color;
++    }
++    if (props.selectedColor) {
++        options.webIconSelectedColor = props.selectedColor;
++    }
+ }
+ function convertOptionsIconToScreensPropsIcon(_icon, _renderingMode) {
+     return undefined;

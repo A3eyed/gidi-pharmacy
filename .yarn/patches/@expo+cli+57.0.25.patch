@@ -1,0 +1,14 @@
+diff --git a/build/src/start/server/middleware/ExpoGoManifestHandlerMiddleware.js b/build/src/start/server/middleware/ExpoGoManifestHandlerMiddleware.js
+--- a/build/src/start/server/middleware/ExpoGoManifestHandlerMiddleware.js
++++ b/build/src/start/server/middleware/ExpoGoManifestHandlerMiddleware.js
+@@ -156,7 +156,9 @@
+             codeSigningInfo
+         });
+         const expoUpdatesManifest = {
+-            id: _crypto().default.randomUUID(),
++            id: _crypto().default.randomUUID({
++                disableEntropyCache: true
++            }),
+             createdAt: new Date().toISOString(),
+             runtimeVersion,
+             launchAsset: {

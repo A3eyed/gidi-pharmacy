@@ -1,0 +1,46 @@
+# Applied when EAS bundles the workspace root for an iOS build of apps/mobile
+# (see apps/flux/core/src/services/interactive-terminal/create-shell.ts).
+# Keep yarn-workspace context (root package.json, yarn.lock, .yarnrc.yml,
+# .yarn/patches/) and apps/mobile/ — exclude everything else so EAS uploads
+# stay small.
+
+node_modules/
+**/node_modules/
+.yarn/cache/
+.yarn/install-state.gz
+.yarn/unplugged/
+
+apps/web/
+
+# Workspace-root only. Unanchored `shared/` / `config/` / `examples/` also
+# match apps/mobile/src/screens/shared, src/config, src/examples, so EAS
+# drops those customer files from the upload and EAGER_BUNDLE dies with
+# Unable to resolve module .../screens/shared/... Preview still works
+# because Expo Go reads the sandbox, not the EAS tarball.
+/config/
+/shared/
+/examples/
+playwright-report/
+test-results/
+caches/
+
+Dockerfile
+docker-compose.test.yml
+README.md
+.dockerignore
+.eslintignore
+.gitignore
+.oxfmtrc.json
+.oxlintrc.json
+
+*.log
+*.tgz
+# Workspace-root env files only. DO NOT use unanchored `.env` / `.env.*` -
+# those match `apps/mobile/.env`, which is the mobile publish-time env map
+# written by create-shell (EXPO_PUBLIC_REVENUE_CAT_*, EXPO_PUBLIC_BASE_URL,
+# etc.). Metro inlines EXPO_PUBLIC_* from that file during the EAS Eager
+# Bundle; excluding it ships binaries without IAP / auth keys and surfaces
+# as empty RevenueCat offerings / "Couldn't load products" paywalls.
+/.env
+/.env.*
+.DS_Store
