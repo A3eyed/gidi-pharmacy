@@ -20,7 +20,6 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-native": "0.86.3",
-    "react-native-screens": "~4.26.0",
-    "@expo/log-box": "patch:@expo/log-box@npm%3A57.0.4#~/.yarn/patches/@expo+log-box+57.0.4.patch"
+    "react-native-screens": "~4.26.0"
   }
 }
