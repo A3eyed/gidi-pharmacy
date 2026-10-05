@@ -68,7 +68,6 @@
       "expo-font",
       "expo-secure-store",
       "expo-web-browser",
-      "@sentry/react-native/expo",
       "expo-asset",
       "expo-image",
       "expo-status-bar"
