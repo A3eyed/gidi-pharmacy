@@ -5,7 +5,7 @@
     "scheme": "gidi",
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "https://dtvoeevhaseb5.cloudfront.net/user-uploads/358bb873-ba61-462f-ab15-bb7bfd127d92.png",
+    "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "https://dtvoeevhaseb5.cloudfront.net/user-uploads/358bb873-ba61-462f-ab15-bb7bfd127d92.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [],
@@ -75,7 +75,7 @@
     ],
     "web": {
       "bundler": "metro",
-      "favicon": "https://dtvoeevhaseb5.cloudfront.net/user-uploads/358bb873-ba61-462f-ab15-bb7bfd127d92.png"
+      "favicon": "./assets/images/favicon.png"
     },
     "experiments": {
       "typedRoutes": true
