@@ -12,6 +12,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.gidi.pharmacy",
       "buildNumber": "2",
+      "appleTeamId": "H2TL9Q9HNU",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

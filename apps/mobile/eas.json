@@ -32,6 +32,12 @@
   },
   "submit": {
     "production": {
+      "ios": {
+        "appleTeamId": "H2TL9Q9HNU",
+        "ascApiKeyPath": "./credentials/AuthKey_K2JDF0O82Y5U.p8",
+        "ascApiKeyId": "K2JDF0O82Y5U",
+        "ascApiKeyIssuerId": "b8db5f52-f43f-4238-853a-e6861d530741"
+      },
       "android": {
         "serviceAccountKeyPath": "./google-service-account.json",
         "track": "internal",
