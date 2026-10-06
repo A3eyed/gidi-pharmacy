@@ -9,6 +9,7 @@
 'use client';
 
 import { useAuthStore } from './store';
+import { SERVER_URL } from './server';
 
 /**
  * Read the current session (jwt + user) synchronously from the auth store.
@@ -36,5 +37,7 @@ export const authFetch: typeof fetch = (input, init) => {
   if (jwt && !headers.has('Authorization')) {
     headers.set('Authorization', `Bearer ${jwt}`);
   }
-  return fetch(input, { ...init, headers });
+  const resolved =
+    typeof input === 'string' && input.startsWith('/') ? `${SERVER_URL}${input}` : input;
+  return fetch(resolved, { ...init, headers });
 };

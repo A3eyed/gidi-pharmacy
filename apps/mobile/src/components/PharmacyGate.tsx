@@ -14,9 +14,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Pill } from '@/components/Icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/utils/auth/useAuth';
+import { useAuthStore } from '@/utils/auth/store';
 import { authFetch } from '@/utils/auth/getSession';
 import { usePharmacyStore } from '@/utils/pharmacyStore';
-import { DashboardSkeleton, friendlyError } from '@/components/Skeleton';
+import { DashboardSkeleton } from '@/components/Skeleton';
+import { readOffline, writeOffline } from '@/utils/offline';
 
 export type Pharmacy = {
   id: number;
@@ -512,12 +514,18 @@ export default function PharmacyGate({ children }: { children: ReactNode }) {
     queryKey: ['pharmacies'],
     queryFn: async () => {
       const response = await authFetch('/api/pharmacies');
-      if (!response.ok) {
-        throw new Error(
-          `When fetching /api/pharmacies, the response was [${response.status}] ${response.statusText}`
-        );
+      if (response.status === 401) {
+        useAuthStore.getState().setAuth(null);
+        throw new Error('signed-out');
       }
-      return response.json();
+      if (!response.ok) {
+        const cached = await readOffline<{ pharmacies: Pharmacy[] }>('pharmacies');
+        if (cached) return cached;
+        throw new Error('offline');
+      }
+      const json = await response.json();
+      await writeOffline('pharmacies', json);
+      return json;
     },
     enabled: !!isAuthenticated,
   });
@@ -548,29 +556,24 @@ export default function PharmacyGate({ children }: { children: ReactNode }) {
   }
 
   if (error) {
+    const offlinePharmacy: Pharmacy = {
+      id: 0,
+      name: 'This phone',
+      address: null,
+      phone: null,
+      member_role: 'admin',
+    };
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#FFFFFF',
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingHorizontal: 32,
-          paddingTop: insets.top,
+      <PharmacyContext.Provider
+        value={{
+          pharmacy: offlinePharmacy,
+          pharmacies: [offlinePharmacy],
+          setPharmacyId: setSelectedId,
+          role: 'admin',
         }}
       >
-        <StatusBar />
-        <Text
-          style={{
-            fontFamily: 'Inter_400Regular',
-            fontSize: 14,
-            color: '#000000',
-            textAlign: 'center',
-          }}
-        >
-          {friendlyError()}
-        </Text>
-      </View>
+        {children}
+      </PharmacyContext.Provider>
     );
   }
 
