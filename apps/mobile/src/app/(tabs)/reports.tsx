@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Share } from 'react-native';
+import { Share, StyleSheet } from 'react-native';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from '@/components/Themed';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
