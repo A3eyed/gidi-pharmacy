@@ -24,6 +24,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PreferencesProvider, usePreferences } from '@/utils/locale/PreferencesProvider';
 void SplashScreen.preventAutoHideAsync();
 
@@ -49,8 +50,7 @@ function ThemedShell() {
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.bg }}>
       <Stack
-        // `(tabs)` owns "/" — there is deliberately no app/index.tsx, which
-        // would otherwise claim the same route and render an empty screen.
+        // `(tabs)` owns the dashboard. app/index.tsx only redirects there.
         initialRouteName="(tabs)"
         screenOptions={{
           headerShown: false,
@@ -97,11 +97,13 @@ export default function RootLayout() {
 
   return (
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <PreferencesProvider>
-          <ThemedShell />
-        </PreferencesProvider>
-      </QueryClientProvider>
+      <SafeAreaProvider>
+        <QueryClientProvider client={queryClient}>
+          <PreferencesProvider>
+            <ThemedShell />
+          </PreferencesProvider>
+        </QueryClientProvider>
+      </SafeAreaProvider>
     </ErrorBoundary>
   );
 }
