@@ -49,56 +49,58 @@ function SignInForm() {
   };
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center bg-gray-50 p-[16px]">
+    <main className="flex min-h-screen w-full items-center justify-center bg-white p-6 font-inter">
       <form
         onSubmit={(e) => {
           void onSubmit(e);
         }}
-        className="flex w-full max-w-[400px] flex-col gap-[16px] rounded-[12px] bg-white p-[24px] shadow"
+        className="flex w-full max-w-[400px] flex-col gap-4 rounded-2xl border border-[#E5E5E5] bg-white p-6"
       >
-        <h1 className="text-[24px] font-semibold">Sign in</h1>
+        <p className="text-xs font-medium tracking-[0.14em] text-[#A3A3A3]">GIDI</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-black">Sign in</h1>
+        <p className="text-sm leading-5 text-[#737373]">Use the same email and password as the website.</p>
 
-        <label className="flex flex-col gap-[4px] text-[14px]">
+        <label className="flex flex-col gap-1.5 text-sm font-medium text-black">
           Email
           <input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-[8px] border border-gray-300 p-[10px] text-[16px] outline-none focus:border-blue-500"
+            className="h-12 rounded-xl border border-[#E5E5E5] px-3.5 text-base font-normal text-black outline-none focus:border-black"
           />
         </label>
 
-        <label className="flex flex-col gap-[4px] text-[14px]">
+        <label className="flex flex-col gap-1.5 text-sm font-medium text-black">
           Password
           <input
             type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-[8px] border border-gray-300 p-[10px] text-[16px] outline-none focus:border-blue-500"
+            className="h-12 rounded-xl border border-[#E5E5E5] px-3.5 text-base font-normal text-black outline-none focus:border-black"
           />
         </label>
 
         {error && (
-          <div className="rounded-[8px] bg-red-50 p-[10px] text-[14px] text-red-600">{error}</div>
+          <div className="rounded-xl border border-[#E5E5E5] bg-[#FAFAFA] p-3 text-sm text-black">{error}</div>
         )}
 
         <button
           type="submit"
           disabled={loading}
-          className="rounded-[8px] bg-blue-600 p-[12px] text-[16px] font-medium text-white disabled:opacity-50"
+          className="h-12 rounded-xl bg-black text-base font-medium text-white disabled:opacity-50"
         >
-          {loading ? 'Signing in…' : 'Sign In'}
+          {loading ? 'Signing in…' : 'Sign in'}
         </button>
 
         <SocialSignInButtons callbackUrl={callbackUrl} />
 
         <a
           href={`/account/signup?callbackUrl=${encodeURIComponent(callbackUrl)}`}
-          className="text-center text-[14px] text-blue-600 hover:underline"
+          className="text-center text-sm font-medium text-black underline"
         >
-          No account? Sign up
+          No account? Create one
         </a>
       </form>
     </main>
