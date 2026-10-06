@@ -37,7 +37,8 @@ const SUGGESTIONS = [
   'List products',
   'What is low stock?',
   'What expires soon?',
-  'Set stock of paracetamol to 20',
+  'Set expiry of paracetamol to 2027-03-01',
+  'Record sale of ORS 2',
   'Add product ORS stock 30 price 4',
 ];
 

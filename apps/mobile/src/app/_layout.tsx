@@ -26,6 +26,7 @@ import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PreferencesProvider, usePreferences } from '@/utils/locale/PreferencesProvider';
+import SplashScene from '@/components/SplashScene';
 void SplashScreen.preventAutoHideAsync();
 
 const SPLASH_TIMEOUT_MS = 10_000;
@@ -67,7 +68,7 @@ function ThemedShell() {
 
 export default function RootLayout() {
   const { initiate, isReady } = useAuth();
-  const [timedOut, setTimedOut] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   const [fontsLoaded, fontsError] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
@@ -101,6 +102,7 @@ export default function RootLayout() {
         <QueryClientProvider client={queryClient}>
           <PreferencesProvider>
             <ThemedShell />
+            {showIntro ? <SplashScene onDone={() => setShowIntro(false)} /> : null}
           </PreferencesProvider>
         </QueryClientProvider>
       </SafeAreaProvider>

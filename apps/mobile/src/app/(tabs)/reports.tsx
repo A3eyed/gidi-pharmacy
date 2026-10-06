@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Share } from 'react-native';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from '@/components/Themed';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -92,6 +92,22 @@ function ReportsContent() {
       return response.json();
     },
   });
+
+  const shareStatement = async () => {
+    const details = pharmacy as typeof pharmacy & { city?: string; region?: string; country?: string; email?: string };
+    const header = [pharmacy.name, pharmacy.address, [details.city, details.region, details.country].filter(Boolean).join(', '), details.email, `${from} to ${to}`].filter(Boolean).join('\n');
+    const rows = (data?.rows ?? data?.byMedication ?? []) as Array<{ name?: string; medication_name?: string; stock_quantity?: number; revenue?: string; subtotal?: string }>;
+    const lines = rows.slice(0, 40).map((row) => `${row.name || row.medication_name || 'Item'}  ${row.stock_quantity ?? ''}  ${row.revenue || row.subtotal || ''}`);
+    const message = `${header}\n\n${type} statement\n${lines.join('\n')}`;
+    try {
+      const FileSystem = require('expo-file-system/legacy');
+      const path = `${FileSystem.cacheDirectory}gidi-${type}-statement.html`;
+      await FileSystem.writeAsStringAsync(path, `<html><body><h1>${pharmacy.name}</h1><p>${header.replace(/\n/g, '<br>')}</p><pre>${lines.join('\n')}</pre></body></html>`);
+      await Share.share({ title: `${pharmacy.name} statement`, message, url: path });
+    } catch {
+      await Share.share({ title: `${pharmacy.name} statement`, message });
+    }
+  };
 
   let body: React.ReactNode = null;
 
@@ -268,6 +284,9 @@ function ReportsContent() {
             {formatShortDate(from)} – {formatShortDate(to)}
           </Text>
         </View>
+        <TouchableOpacity onPress={() => { void shareStatement(); }} style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10, backgroundColor: '#000000' }}>
+          <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: '#FFFFFF' }}>Share</Text>
+        </TouchableOpacity>
       </View>
 
       <ScrollView

@@ -128,51 +128,74 @@ export async function POST(request: Request) {
   }
 
   const setStock = question.match(/^(?:set|update|change)\s+(?:the\s+)?stock(?:\s+of)?\s+(.+?)\s+to\s+(\d+)\s*$/i);
+  const setPrice = question.match(/^(?:set|update|change)\s+(?:the\s+)?price(?:\s+of)?\s+(.+?)\s+to\s+([\d.]+)\s*$/i);
+  const setExpiry = question.match(/^(?:set|update|change)\s+(?:the\s+)?expir(?:y|ation)(?:\s+date)?(?:\s+of)?\s+(.+?)\s+to\s+(\d{4}-\d{2}-\d{2})\s*$/i);
+  const setReorder = question.match(/^(?:set|update|change)\s+(?:the\s+)?reorder(?:\s+level)?(?:\s+of)?\s+(.+?)\s+to\s+(\d+)\s*$/i);
+  const rename = question.match(/^rename\s+(.+?)\s+to\s+(.+)$/i);
+  const sale = question.match(/^(?:record|sell|log)\s+(?:a\s+)?sale(?:\s+of)?\s+(.+?)\s+(?:qty|x|quantity)?\s*(\d+)\s*$/i);
   const addProduct = question.match(/^add(?:\s+(?:product|medication|medicine))?\s+(.+?)(?:\s+stock\s+(\d+))?(?:\s+price\s+([\d.]+))?\s*$/i);
-  if (hasPharmacy && (setStock || (addProduct && /^add\b/i.test(question)))) {
+  const isAction = setStock || setPrice || setExpiry || setReorder || rename || sale || (addProduct && /^add\b/i.test(question));
+  if (hasPharmacy && isAction) {
     try {
-      if (setStock) {
-        const name = setStock[1].trim();
-        const quantity = Number(setStock[2]);
-        const updated = await sql`
-          UPDATE medications
-          SET stock_quantity = ${quantity}
-          WHERE pharmacy_id = ${pharmacyId}
-            AND LOWER(name) = LOWER(${name})
-          RETURNING name, stock_quantity, unit_price
-        `;
-        const row = updated[0];
-        return Response.json({
-          reply: row
-            ? `Updated ${row.name}. Stock is now ${row.stock_quantity}.`
-            : `I could not find “${name}” in this pharmacy. Add it first, or check the spelling.`,
+      const replyFor = (row: Record<string, unknown> | undefined, done: string, missing: string) =>
+        Response.json({
+          reply: row ? done : missing,
           sources: [{ id: 'inventory', title: 'GiDi inventory' }],
           confidence: 'high',
           suggestions: ['List products', 'Low stock'],
           queryId: null,
           model: 'gidi-knowledge-base',
-          action: 'set-stock',
+          action: 'inventory',
         });
+      if (setStock) {
+        const name = setStock[1].trim();
+        const updated = await sql`UPDATE medications SET stock_quantity = ${Number(setStock[2])} WHERE pharmacy_id = ${pharmacyId} AND LOWER(name) = LOWER(${name}) RETURNING name, stock_quantity`;
+        const row = updated[0];
+        return replyFor(row, `Updated ${row?.name}. Stock is now ${row?.stock_quantity}.`, `I could not find “${name}”.`);
+      }
+      if (setPrice) {
+        const name = setPrice[1].trim();
+        const updated = await sql`UPDATE medications SET unit_price = ${Number(setPrice[2])} WHERE pharmacy_id = ${pharmacyId} AND LOWER(name) = LOWER(${name}) RETURNING name, unit_price`;
+        const row = updated[0];
+        return replyFor(row, `Updated ${row?.name}. Price is now ${currency} ${Number(row?.unit_price).toFixed(2)}.`, `I could not find “${name}”.`);
+      }
+      if (setExpiry) {
+        const name = setExpiry[1].trim();
+        const updated = await sql`UPDATE medications SET expiry_date = ${setExpiry[2]} WHERE pharmacy_id = ${pharmacyId} AND LOWER(name) = LOWER(${name}) RETURNING name, expiry_date`;
+        const row = updated[0];
+        return replyFor(row, `Updated ${row?.name}. Expiry is now ${String(row?.expiry_date).slice(0, 10)}.`, `I could not find “${name}”.`);
+      }
+      if (setReorder) {
+        const name = setReorder[1].trim();
+        const updated = await sql`UPDATE medications SET reorder_level = ${Number(setReorder[2])} WHERE pharmacy_id = ${pharmacyId} AND LOWER(name) = LOWER(${name}) RETURNING name, reorder_level`;
+        const row = updated[0];
+        return replyFor(row, `Updated ${row?.name}. Reorder level is now ${row?.reorder_level}.`, `I could not find “${name}”.`);
+      }
+      if (rename) {
+        const updated = await sql`UPDATE medications SET name = ${rename[2].trim()} WHERE pharmacy_id = ${pharmacyId} AND LOWER(name) = LOWER(${rename[1].trim()}) RETURNING name`;
+        const row = updated[0];
+        return replyFor(row, `Renamed that product to ${row?.name}.`, `I could not find “${rename[1].trim()}”.`);
+      }
+      if (sale) {
+        const name = sale[1].trim();
+        const quantity = Number(sale[2]);
+        const meds = await sql`SELECT id, name, unit_price, stock_quantity FROM medications WHERE pharmacy_id = ${pharmacyId} AND LOWER(name) = LOWER(${name}) LIMIT 1`;
+        const med = meds[0];
+        if (!med) return replyFor(undefined, '', `I could not find “${name}”.`);
+        if (Number(med.stock_quantity) < quantity) {
+          return replyFor(med, `Only ${med.stock_quantity} of ${med.name} are in stock, so I did not record the sale.`, '');
+        }
+        const subtotal = Number(med.unit_price) * quantity;
+        const created = await sql`INSERT INTO sales (pharmacy_id, total_amount) VALUES (${pharmacyId}, ${subtotal}) RETURNING id`;
+        await sql`INSERT INTO sale_items (sale_id, medication_id, medication_name, quantity, unit_price, subtotal) VALUES (${created[0].id}, ${med.id}, ${med.name}, ${quantity}, ${med.unit_price}, ${subtotal})`;
+        await sql`UPDATE medications SET stock_quantity = stock_quantity - ${quantity} WHERE id = ${med.id}`;
+        return replyFor(med, `Recorded sale #${created[0].id}: ${quantity} × ${med.name} for ${currency} ${subtotal.toFixed(2)}. Stock is now ${Number(med.stock_quantity) - quantity}.`, '');
       }
       if (addProduct) {
         const name = addProduct[1].replace(/\s+stock\s+\d+.*$/i, '').trim();
-        const quantity = Number(addProduct[2] ?? 0);
-        const price = Number(addProduct[3] ?? 0);
-        const created = await sql`
-          INSERT INTO medications (pharmacy_id, name, unit_price, stock_quantity, reorder_level)
-          VALUES (${pharmacyId}, ${name}, ${price}, ${quantity}, 10)
-          RETURNING name, stock_quantity, unit_price
-        `;
+        const created = await sql`INSERT INTO medications (pharmacy_id, name, unit_price, stock_quantity, reorder_level) VALUES (${pharmacyId}, ${name}, ${Number(addProduct[3] ?? 0)}, ${Number(addProduct[2] ?? 0)}, 10) RETURNING name, stock_quantity, unit_price`;
         const row = created[0];
-        return Response.json({
-          reply: `Added ${row.name} with ${row.stock_quantity} in stock at ${currency} ${Number(row.unit_price).toFixed(2)}.`,
-          sources: [{ id: 'inventory', title: 'GiDi inventory' }],
-          confidence: 'high',
-          suggestions: ['List products', `Set stock of ${row.name} to 20`],
-          queryId: null,
-          model: 'gidi-knowledge-base',
-          action: 'add-product',
-        });
+        return replyFor(row, `Added ${row.name} with ${row.stock_quantity} in stock at ${currency} ${Number(row.unit_price).toFixed(2)}.`, '');
       }
     } catch (error) {
       console.error('Azara inventory action failed', error);
