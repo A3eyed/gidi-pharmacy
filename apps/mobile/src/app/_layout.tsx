@@ -69,6 +69,7 @@ function ThemedShell() {
 export default function RootLayout() {
   const { initiate, isReady } = useAuth();
   const [showIntro, setShowIntro] = useState(true);
+  const [timedOut, setTimedOut] = useState(false);
   const [fontsLoaded, fontsError] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
