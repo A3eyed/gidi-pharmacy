@@ -16,6 +16,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/utils/auth/useAuth';
 import { authFetch } from '@/utils/auth/getSession';
 import { usePharmacyStore } from '@/utils/pharmacyStore';
+import { DashboardSkeleton, friendlyError } from '@/components/Skeleton';
 
 export type Pharmacy = {
   id: number;
@@ -63,86 +64,105 @@ function Wordmark() {
 }
 
 function SignInScreen() {
-  const { signIn, signUp } = useAuth();
+  const { signIn } = useAuth();
   const insets = useSafeAreaInsets();
-  const privacyUrl = `${process.env.EXPO_PUBLIC_BASE_URL ?? ''}/privacy`;
+  const samples = [
+    { title: 'Dashboard', body: 'Today’s revenue, low stock, and sales just recorded.' },
+    { title: 'Inventory', body: 'Paracetamol 500mg · 42 left · expires 12 Mar' },
+    { title: 'Sales', body: 'A walk-in sale of Amoxicillin, receipt saved on this phone.' },
+    { title: 'Azara', body: '“What can I suggest for a dry cough?” answered from the reference library.' },
+  ];
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-        paddingTop: insets.top,
-        paddingHorizontal: 24,
-        justifyContent: 'center',
-      }}
-    >
-      <StatusBar />
-      <Wordmark />
-      <Text
-        style={{
-          fontFamily: 'Inter_600SemiBold',
-          fontSize: 26,
-          color: '#000000',
-          marginTop: 24,
-          letterSpacing: -0.5,
+    <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingTop: insets.top + 16,
+          paddingHorizontal: 24,
+          paddingBottom: 120,
         }}
       >
-        Pharmacy management
-      </Text>
-      <Text
-        style={{
-          fontFamily: 'Inter_400Regular',
-          fontSize: 14,
-          color: '#737373',
-          marginTop: 6,
-          lineHeight: 20,
-        }}
-      >
-        Track inventory, record sales, and see your top performing medications. Your data stays
-        private — we never use it for advertising, and Azara looks up answers in a reference library
-        built into the app rather than an external AI service.
-      </Text>
-      <TouchableOpacity
-        onPress={signIn}
-        style={{
-          marginTop: 28,
-          height: 48,
-          borderRadius: 10,
-          backgroundColor: '#000000',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 15, color: '#FFFFFF' }}>
-          Sign in
+        <StatusBar />
+        <Wordmark />
+        <Text
+          style={{
+            fontFamily: 'Inter_600SemiBold',
+            fontSize: 26,
+            color: '#000000',
+            marginTop: 24,
+            letterSpacing: -0.5,
+          }}
+        >
+          See the counter before you sign in
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={signUp}
+        <Text
+          style={{
+            fontFamily: 'Inter_400Regular',
+            fontSize: 14,
+            color: '#737373',
+            marginTop: 6,
+            lineHeight: 20,
+          }}
+        >
+          This is a sample of the tabs. Your own stock and sales stay private until you continue.
+        </Text>
+        {samples.map((item) => (
+          <View
+            key={item.title}
+            style={{
+              marginTop: 12,
+              borderWidth: 1,
+              borderColor: '#E5E5E5',
+              borderRadius: 12,
+              padding: 14,
+            }}
+          >
+            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 15, color: '#000000' }}>
+              {item.title}
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'Inter_400Regular',
+                fontSize: 13,
+                color: '#737373',
+                marginTop: 4,
+                lineHeight: 18,
+              }}
+            >
+              {item.body}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
+      <View
         style={{
-          marginTop: 10,
-          height: 48,
-          borderRadius: 10,
-          borderWidth: 1,
-          borderColor: '#E5E5E5',
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          paddingHorizontal: 24,
+          paddingTop: 12,
+          paddingBottom: insets.bottom + 12,
           backgroundColor: '#FFFFFF',
-          alignItems: 'center',
-          justifyContent: 'center',
+          borderTopWidth: 1,
+          borderTopColor: '#F0F0F0',
         }}
       >
-        <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 15, color: '#000000' }}>
-          Create an account
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => Linking.openURL(privacyUrl)}
-        style={{ marginTop: 16, alignItems: 'center', paddingVertical: 8 }}
-      >
-        <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 12, color: '#737373' }}>
-          Privacy policy
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={signIn}
+          activeOpacity={0.7}
+          style={{
+            height: 48,
+            borderRadius: 10,
+            backgroundColor: '#000000',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 15, color: '#FFFFFF' }}>
+            Continue
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -522,7 +542,7 @@ export default function PharmacyGate({ children }: { children: ReactNode }) {
         }}
       >
         <StatusBar />
-        <ActivityIndicator color="#000000" />
+        <DashboardSkeleton />
       </View>
     );
   }
@@ -548,7 +568,7 @@ export default function PharmacyGate({ children }: { children: ReactNode }) {
             textAlign: 'center',
           }}
         >
-          Could not load your pharmacies. Please check your connection and reopen the app.
+          {friendlyError()}
         </Text>
       </View>
     );

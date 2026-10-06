@@ -17,6 +17,7 @@ import { authFetch } from '@/utils/auth/getSession';
 import { usePreferences } from '@/utils/locale/PreferencesProvider';
 import GlassCard from '@/components/GlassCard';
 import PharmacyGate, { CreatePharmacyScreen, usePharmacy } from '@/components/PharmacyGate';
+import { DashboardSkeleton, friendlyError } from '@/components/Skeleton';
 import { formatCurrency, formatDateTime, formatShortDate } from '@/utils/format';
 
 function StatCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
@@ -149,19 +150,13 @@ function DashboardContent() {
 
   let body: React.ReactNode = null;
   if (isLoading) {
-    body = (
-      <Text
-        style={{ fontFamily: 'Inter_400Regular', fontSize: 14, color: '#737373', marginTop: 20 }}
-      >
-        Loading dashboard…
-      </Text>
-    );
+    body = <DashboardSkeleton />;
   } else if (error) {
     body = (
       <Text
         style={{ fontFamily: 'Inter_400Regular', fontSize: 14, color: '#000000', marginTop: 20 }}
       >
-        Could not load the dashboard. Pull down to retry.
+        {friendlyError()}
       </Text>
     );
   } else {

@@ -15,6 +15,7 @@ import { ChevronLeft, Plus, Search, Trash2 } from '@/components/Icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authFetch } from '@/utils/auth/getSession';
 import { readOffline, writeOffline } from '@/utils/offline';
+import { ListSkeleton, friendlyError } from '@/components/Skeleton';
 import PharmacyGate, { usePharmacy } from '@/components/PharmacyGate';
 import { formatCurrency, formatShortDate } from '@/utils/format';
 
@@ -431,19 +432,7 @@ function InventoryContent() {
 
   let listContent: React.ReactNode = null;
   if (isLoading) {
-    listContent = (
-      <Text
-        style={{
-          fontFamily: 'Inter_400Regular',
-          fontSize: 14,
-          color: '#737373',
-          paddingHorizontal: 20,
-          marginTop: 20,
-        }}
-      >
-        Loading inventory…
-      </Text>
-    );
+    listContent = <ListSkeleton />;
   } else if (error) {
     listContent = (
       <Text
@@ -455,7 +444,7 @@ function InventoryContent() {
           marginTop: 20,
         }}
       >
-        Could not load inventory. Please try again.
+        {friendlyError()}
       </Text>
     );
   } else if (medications.length === 0) {
@@ -583,6 +572,7 @@ function InventoryContent() {
             setEditingMed(null);
             setFormOpen(true);
           }}
+          activeOpacity={0.7}
           style={{
             width: 36,
             height: 36,
