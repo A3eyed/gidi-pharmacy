@@ -21,7 +21,8 @@ import StaffManagementCard from '@/components/StaffManagementCard';
 import AppearanceRegionCards from '@/components/AppearanceRegionCards';
 import { usePreferences } from '@/utils/locale/PreferencesProvider';
 
-const PRIVACY_URL = `${process.env.EXPO_PUBLIC_BASE_URL ?? ''}/privacy`;
+const PRIVACY_URL = 'https://gidipharmacymanagement.created.app/privacy';
+const TERMS_URL = 'https://gidipharmacymanagement.created.app/terms';
 
 function Row({ label, value }: { label: string; value: string }) {
   const { colors } = usePreferences();
@@ -242,6 +243,27 @@ function SettingsContent() {
             <FileText size={14} color={colors.text} />
             <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 14, color: colors.text }}>
               Read privacy policy
+            </Text>
+            <ExternalLink size={12} color={colors.textMuted} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(TERMS_URL)}
+            activeOpacity={0.7}
+            style={{
+              marginTop: 8,
+              height: 42,
+              borderRadius: 10,
+              borderWidth: 1,
+              borderColor: colors.border,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 7,
+            }}
+          >
+            <FileText size={14} color={colors.text} />
+            <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 14, color: colors.text }}>
+              Read terms
             </Text>
             <ExternalLink size={12} color={colors.textMuted} />
           </TouchableOpacity>

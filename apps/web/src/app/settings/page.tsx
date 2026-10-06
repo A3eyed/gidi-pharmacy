@@ -235,6 +235,14 @@ function SettingsContent() {
           Read the privacy policy
           <ExternalLink size={12} className="text-[#737373]" />
         </Link>
+        <Link
+          href="/terms"
+          className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-[#E5E5E5] px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-[#FAFAFA]"
+        >
+          <FileText size={14} />
+          Read the terms
+          <ExternalLink size={12} className="text-[#737373]" />
+        </Link>
       </div>
 
       <div className={`${cardClass} mt-4`}>

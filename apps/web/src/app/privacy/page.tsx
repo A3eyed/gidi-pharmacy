@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
         <h1 className="text-3xl font-semibold tracking-tight text-black">Privacy Policy</h1>
-        <p className="mt-2 text-sm text-[#737373]">Last updated: 19 September 2026</p>
+        <p className="mt-2 text-sm text-[#737373]">Last updated: 6 October 2026</p>
 
         <p className="mt-6 text-sm leading-relaxed text-[#404040]">
           GiDi is a pharmacy management application for inventory, sales and analytics. This policy
@@ -236,7 +236,11 @@ export default function PrivacyPolicyPage() {
         <section className={sectionClass}>
           <h2 className={h2Class}>Contact</h2>
           <p className={pClass}>
-            Questions about privacy or your data can be sent to Abdallah Fuseini, the builder of GiDi, at the support email listed on the GiDi App Store listing.
+            Questions about privacy or your data can be sent to Abdallah Fuseini, the builder of GiDi, at the support email listed on the GiDi App Store listing. The terms are at{' '}
+            <Link href="/terms" className="font-medium text-black underline">
+              /terms
+            </Link>
+            .
           </p>
         </section>
       </main>

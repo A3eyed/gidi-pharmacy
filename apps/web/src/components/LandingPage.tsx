@@ -248,9 +248,14 @@ export default function LandingPage() {
 
         <footer className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-black/10 pt-6 text-xs text-black/50 dark:border-white/10 dark:text-white/50 sm:flex-row">
           <span>GiDi — Smart Pharmacy Management. Built by Abdallah Fuseini.</span>
-          <Link href="/privacy" className="hover:text-black dark:hover:text-white">
-            Privacy policy
-          </Link>
+          <span className="flex gap-4">
+            <Link href="/privacy" className="hover:text-black dark:hover:text-white">
+              Privacy policy
+            </Link>
+            <Link href="/terms" className="hover:text-black dark:hover:text-white">
+              Terms
+            </Link>
+          </span>
         </footer>
       </main>
     </div>
