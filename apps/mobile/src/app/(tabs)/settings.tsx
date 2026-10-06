@@ -21,8 +21,8 @@ import StaffManagementCard from '@/components/StaffManagementCard';
 import AppearanceRegionCards from '@/components/AppearanceRegionCards';
 import { usePreferences } from '@/utils/locale/PreferencesProvider';
 
-const PRIVACY_URL = 'https://gidipharmacymanagement.created.app/privacy';
-const TERMS_URL = 'https://gidipharmacymanagement.created.app/terms';
+const PRIVACY_URL = 'https://gidi-pharmacy.vercel.app/privacy';
+const TERMS_URL = 'https://gidi-pharmacy.vercel.app/terms';
 
 function Row({ label, value }: { label: string; value: string }) {
   const { colors } = usePreferences();

@@ -11,8 +11,8 @@
       "env": {
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
         "EXPO_USE_PRECOMPILED_MODULES": "0",
-        "EXPO_PUBLIC_BASE_URL": "https://gidipharmacymanagement.created.app",
-        "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidipharmacymanagement.created.app"
+        "EXPO_PUBLIC_BASE_URL": "https://gidi-pharmacy.vercel.app",
+        "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidi-pharmacy.vercel.app"
       }
     },
     "preview": {
@@ -21,8 +21,8 @@
       "env": {
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
         "EXPO_USE_PRECOMPILED_MODULES": "0",
-        "EXPO_PUBLIC_BASE_URL": "https://gidipharmacymanagement.created.app",
-        "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidipharmacymanagement.created.app"
+        "EXPO_PUBLIC_BASE_URL": "https://gidi-pharmacy.vercel.app",
+        "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidi-pharmacy.vercel.app"
       }
     },
     "production": {
@@ -34,8 +34,8 @@
       "env": {
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
         "EXPO_USE_PRECOMPILED_MODULES": "0",
-        "EXPO_PUBLIC_BASE_URL": "https://gidipharmacymanagement.created.app",
-        "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidipharmacymanagement.created.app"
+        "EXPO_PUBLIC_BASE_URL": "https://gidi-pharmacy.vercel.app",
+        "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidi-pharmacy.vercel.app"
       }
     }
   },
