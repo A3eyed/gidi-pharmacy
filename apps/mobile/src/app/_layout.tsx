@@ -88,10 +88,8 @@ export default function RootLayout() {
   const fontsReady = fontsLoaded || !!fontsError;
 
   useEffect(() => {
-    if ((isReady && fontsReady) || timedOut) {
-      void SplashScreen.hideAsync();
-    }
-  }, [isReady, fontsReady, timedOut]);
+    void SplashScreen.hideAsync();
+  }, []);
 
   if ((!isReady || !fontsReady) && !timedOut) {
     return null;
