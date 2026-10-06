@@ -197,8 +197,8 @@ export function inventoryCommand(
 ): ComposedAnswer | null {
   const text = question.toLowerCase().trim();
   const isInventory =
-    /\b(list|show|display|give me|what(?:'s| is| do we))\b.{0,40}\b(inventory|stock|medications?|medicines?)\b/.test(text) ||
-    /\b(inventory listing|stock list|low stock|out of stock|expiring stock|expiry list)\b/.test(text) ||
+    /\b(list|show|display|give me|what(?:'s| is| do we))\b.{0,40}\b(inventory|stock|products?|medications?|medicines?)\b/.test(text) ||
+    /\b(inventory listing|stock list|product list|low stock|out of stock|expiring stock|expiry list)\b/.test(text) ||
     /\b(how many|stock of|do we have|in stock)\b/.test(text) ||
     /\b(reorder list|what expires|what is expiring)\b/.test(text);
   if (!isInventory) return null;

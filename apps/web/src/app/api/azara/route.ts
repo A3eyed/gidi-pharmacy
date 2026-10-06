@@ -119,12 +119,71 @@ export async function POST(request: Request) {
       reply: `Saved. I will use this next time someone asks about “${noteQuestion}”.\n\n${noteAnswer}`,
       sources: [{ id: 'learned', title: 'Pharmacy note' }],
       confidence: 'high',
-      suggestions: ['List inventory', noteQuestion],
+      suggestions: ['List products', noteQuestion],
       queryId: null,
       model: 'gidi-knowledge-base',
       knowledgeSize: KNOWLEDGE_STATS.entries,
       action: 'remember',
     });
+  }
+
+  const setStock = question.match(/^(?:set|update|change)\s+(?:the\s+)?stock(?:\s+of)?\s+(.+?)\s+to\s+(\d+)\s*$/i);
+  const addProduct = question.match(/^add(?:\s+(?:product|medication|medicine))?\s+(.+?)(?:\s+stock\s+(\d+))?(?:\s+price\s+([\d.]+))?\s*$/i);
+  if (hasPharmacy && (setStock || (addProduct && /^add\b/i.test(question)))) {
+    try {
+      if (setStock) {
+        const name = setStock[1].trim();
+        const quantity = Number(setStock[2]);
+        const updated = await sql`
+          UPDATE medications
+          SET stock_quantity = ${quantity}
+          WHERE pharmacy_id = ${pharmacyId}
+            AND LOWER(name) = LOWER(${name})
+          RETURNING name, stock_quantity, unit_price
+        `;
+        const row = updated[0];
+        return Response.json({
+          reply: row
+            ? `Updated ${row.name}. Stock is now ${row.stock_quantity}.`
+            : `I could not find “${name}” in this pharmacy. Add it first, or check the spelling.`,
+          sources: [{ id: 'inventory', title: 'GiDi inventory' }],
+          confidence: 'high',
+          suggestions: ['List products', 'Low stock'],
+          queryId: null,
+          model: 'gidi-knowledge-base',
+          action: 'set-stock',
+        });
+      }
+      if (addProduct) {
+        const name = addProduct[1].replace(/\s+stock\s+\d+.*$/i, '').trim();
+        const quantity = Number(addProduct[2] ?? 0);
+        const price = Number(addProduct[3] ?? 0);
+        const created = await sql`
+          INSERT INTO medications (pharmacy_id, name, unit_price, stock_quantity, reorder_level)
+          VALUES (${pharmacyId}, ${name}, ${price}, ${quantity}, 10)
+          RETURNING name, stock_quantity, unit_price
+        `;
+        const row = created[0];
+        return Response.json({
+          reply: `Added ${row.name} with ${row.stock_quantity} in stock at ${currency} ${Number(row.unit_price).toFixed(2)}.`,
+          sources: [{ id: 'inventory', title: 'GiDi inventory' }],
+          confidence: 'high',
+          suggestions: ['List products', `Set stock of ${row.name} to 20`],
+          queryId: null,
+          model: 'gidi-knowledge-base',
+          action: 'add-product',
+        });
+      }
+    } catch (error) {
+      console.error('Azara inventory action failed', error);
+      return Response.json({
+        reply: 'I could not change the inventory just now. Try again from the Inventory tab.',
+        sources: [],
+        confidence: 'low',
+        suggestions: ['List products'],
+        queryId: null,
+      });
+    }
   }
 
   const answer = inventoryCommand(question, stock, currency) ?? composeAnswer({ question: searchText, learned, stock, currency });

@@ -34,12 +34,11 @@ type Message = {
 };
 
 const SUGGESTIONS = [
-  'Adult dose of artemether-lumefantrine?',
-  'Metronidazole with warfarin — safe?',
-  'Counselling points for metformin',
-  'How do I manage anaphylaxis?',
-  'When should I refer a fever?',
-  'How do I calculate a reorder level?',
+  'List products',
+  'What is low stock?',
+  'What expires soon?',
+  'Set stock of paracetamol to 20',
+  'Add product ORS stock 30 price 4',
 ];
 
 /** Lightweight markdown rendering for Azara's replies. */
@@ -362,229 +361,60 @@ function AzaraContent() {
       <ScrollView
         ref={scrollRef}
         style={{ flex: 1 }}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 28 }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <GlassCard tone="gold" padding={12} style={{ marginBottom: 12 }}>
-          <View style={{ flexDirection: 'row', gap: 8, backgroundColor: 'transparent' }}>
-            <TriangleAlert size={14} color={colors.gold} style={{ marginTop: 2 }} />
-            <Text
-              style={{
-                flex: 1,
-                fontFamily: 'Inter_400Regular',
-                fontSize: 11,
-                lineHeight: 17,
-                color: '#404040',
-              }}
-            >
-              Azara answers from a built-in pharmacy reference library, so it works even when the
-              internet does not. Reference information for qualified professionals — it does not
-              diagnose patients or replace a pharmacist&apos;s judgement.
-            </Text>
-          </View>
-        </GlassCard>
-
         {isEmpty ? (
-          <View style={{ alignItems: 'center', paddingTop: 24, backgroundColor: 'transparent' }}>
-            <View
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: 16,
-                backgroundColor: colors.gold,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Bot size={22} color={resolvedTheme === 'dark' ? '#000000' : '#FFFFFF'} />
-            </View>
-            <Text
-              style={{
-                fontFamily: 'Inter_600SemiBold',
-                fontSize: 16,
-                color: '#000000',
-                marginTop: 12,
-              }}
-            >
-              Ask Azara about stock or a medicine
+          <View style={{ paddingTop: 20, backgroundColor: 'transparent' }}>
+            <Text style={{ fontFamily: 'Inter_600SemiBold', fontSize: 22, color: '#000000' }}>
+              What should Azara do?
             </Text>
-            <Text
-              style={{
-                fontFamily: 'Inter_400Regular',
-                fontSize: 13,
-                lineHeight: 19,
-                color: '#737373',
-                textAlign: 'center',
-                marginTop: 4,
-                paddingHorizontal: 12,
-              }}
-            >
-              Dosing, interactions, emergencies, counselling points, or what you can dispense from
-              your own stock.
+            <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 14, color: '#737373', marginTop: 6, lineHeight: 20 }}>
+              List products, check low stock, or change a quantity. Reference answers stay available too.
             </Text>
-
-            <View style={{ width: '100%', gap: 8, marginTop: 20, backgroundColor: 'transparent' }}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 18 }}>
               {SUGGESTIONS.map((s) => (
-                <TouchableOpacity key={s} onPress={() => send(s)} activeOpacity={0.8}>
-                  <GlassCard padding={12} radius={12}>
-                    <Text
-                      style={{ fontFamily: 'Inter_400Regular', fontSize: 13, color: '#000000' }}
-                    >
-                      {s}
-                    </Text>
-                  </GlassCard>
+                <TouchableOpacity key={s} onPress={() => send(s)} activeOpacity={0.7}>
+                  <View style={{ borderWidth: 1, borderColor: '#E5E5E5', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#FFFFFF' }}>
+                    <Text style={{ fontFamily: 'Inter_500Medium', fontSize: 13, color: '#000000' }}>{s}</Text>
+                  </View>
                 </TouchableOpacity>
               ))}
             </View>
           </View>
         ) : (
-          <View style={{ gap: 16, backgroundColor: 'transparent' }}>
+          <View style={{ gap: 10, backgroundColor: 'transparent' }}>
             {messages.map((m, index) => {
               const isUser = m.role === 'user';
               return (
-                <View
-                  key={index}
-                  style={{ flexDirection: 'row', gap: 10, backgroundColor: 'transparent' }}
-                >
+                <View key={index} style={{ alignItems: isUser ? 'flex-end' : 'flex-start', backgroundColor: 'transparent' }}>
                   <View
                     style={{
-                      width: 28,
-                      height: 28,
-                      borderRadius: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: isUser ? 'transparent' : colors.gold,
-                      borderWidth: isUser ? StyleSheet.hairlineWidth : 0,
-                      borderColor: '#E5E5E5',
+                      maxWidth: '86%',
+                      borderRadius: 18,
+                      paddingHorizontal: 14,
+                      paddingVertical: 10,
+                      backgroundColor: isUser ? '#000000' : '#F5F5F5',
                     }}
                   >
                     {isUser ? (
-                      <User size={14} color="#737373" />
+                      <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 15, lineHeight: 21, color: '#FFFFFF' }}>{m.content}</Text>
                     ) : (
-                      <Bot size={14} color={resolvedTheme === 'dark' ? '#000000' : '#FFFFFF'} />
-                    )}
-                  </View>
-
-                  <View style={{ flex: 1, backgroundColor: 'transparent' }}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: 6,
-                        marginBottom: 4,
-                        backgroundColor: 'transparent',
-                      }}
-                    >
-                      <Text
-                        style={{ fontFamily: 'Inter_500Medium', fontSize: 11, color: '#737373' }}
-                      >
-                        {isUser ? 'You' : 'Azara'}
-                      </Text>
-                      {!isUser && m.confidence ? (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            gap: 3,
-                            paddingHorizontal: 6,
-                            paddingVertical: 2,
-                            borderRadius: 999,
-                            backgroundColor: colors.goldSoft,
-                          }}
-                        >
-                          <ShieldCheck size={9} color={colors.gold} />
-                          <Text
-                            style={{
-                              fontFamily: 'Inter_500Medium',
-                              fontSize: 9,
-                              color: colors.gold,
-                            }}
-                          >
-                            {m.confidence === 'high'
-                              ? 'Strong match'
-                              : m.confidence === 'medium'
-                                ? 'Partial match'
-                                : 'Weak match'}
-                          </Text>
-                        </View>
-                      ) : null}
-                    </View>
-
-                    {isUser ? (
-                      <Text
-                        style={{
-                          fontFamily: 'Inter_400Regular',
-                          fontSize: 14,
-                          lineHeight: 21,
-                          color: '#000000',
-                        }}
-                      >
-                        {m.content}
-                      </Text>
-                    ) : (
-                      <View style={{ backgroundColor: 'transparent' }}>
-                        <AssistantText content={m.content} />
-                        {m.sources && m.sources.length > 0 ? (
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              flexWrap: 'wrap',
-                              gap: 6,
-                              marginTop: 8,
-                              backgroundColor: 'transparent',
-                            }}
-                          >
-                            {m.sources.map((s) => (
-                              <View
-                                key={s.id}
-                                style={{
-                                  paddingHorizontal: 8,
-                                  paddingVertical: 3,
-                                  borderRadius: 999,
-                                  borderWidth: StyleSheet.hairlineWidth,
-                                  borderColor: '#E5E5E5',
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    fontFamily: 'Inter_400Regular',
-                                    fontSize: 10,
-                                    color: '#737373',
-                                  }}
-                                >
-                                  {s.title}
-                                </Text>
-                              </View>
-                            ))}
-                          </View>
-                        ) : null}
-                        {m.queryId ? <FeedbackRow queryId={m.queryId} /> : null}
-                      </View>
+                      <AssistantText content={m.content} />
                     )}
                   </View>
                 </View>
               );
             })}
-
             {ask.isPending ? (
-              <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 13, color: '#737373' }}>
-                Azara is checking the knowledge base…
-              </Text>
+              <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 13, color: '#737373' }}>Azara is looking at your stock…</Text>
             ) : null}
           </View>
         )}
-
         {error ? (
-          <Text
-            style={{
-              fontFamily: 'Inter_400Regular',
-              fontSize: 13,
-              color: '#000000',
-              marginTop: 12,
-            }}
-          >
-            {error}
+          <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 13, color: '#000000', marginTop: 12 }}>
+            I could not finish that. Check the connection and send it again.
           </Text>
         ) : null}
       </ScrollView>
@@ -606,7 +436,7 @@ function AzaraContent() {
         <TextInput
           value={input}
           onChangeText={setInput}
-          placeholder="List inventory, low stock, or a medicine…"
+          placeholder="List products, low stock, or set a quantity"
           placeholderTextColor="#A3A3A3"
           multiline
           style={{
