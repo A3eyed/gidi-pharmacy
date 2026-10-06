@@ -14,6 +14,7 @@
 import React from 'react';
 import { Modal, Text, View } from 'react-native';
 import { AuthWebView } from './AuthWebView';
+import { AUTH_URL, SERVER_URL } from './server';
 import { useAuthModal, useAuthStore } from './store';
 
 export { useAuthModal } from './store';
@@ -54,8 +55,8 @@ export const AuthModal = () => {
     return null;
   }
 
-  const proxyURL = process.env.EXPO_PUBLIC_PROXY_BASE_URL;
-  const baseURL = process.env.EXPO_PUBLIC_BASE_URL;
+  const proxyURL = process.env.EXPO_PUBLIC_PROXY_BASE_URL || AUTH_URL;
+  const baseURL = process.env.EXPO_PUBLIC_BASE_URL || SERVER_URL;
   if (!proxyURL || !baseURL) {
     const missing = [!proxyURL && 'EXPO_PUBLIC_PROXY_BASE_URL', !baseURL && 'EXPO_PUBLIC_BASE_URL']
       .filter(Boolean)
