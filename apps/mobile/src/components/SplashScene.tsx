@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, StyleSheet, Text, View } from 'react-native';
+import { Animated, Modal, StyleSheet, Text, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { usePreferences } from '@/utils/locale/PreferencesProvider';
 
 const LETTERS = ['G', 'i', 'D', 'i'];
 
-/** Spells GiDi quickly. Background follows the resolved theme. */
+/** Spells GiDi in the center of the screen. Background follows the resolved theme. */
 export default function SplashScene({ onDone }: { onDone: () => void }) {
   const { colors } = usePreferences();
   const [count, setCount] = useState(0);
+  const [open, setOpen] = useState(true);
   const fade = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -20,28 +21,26 @@ export default function SplashScene({ onDone }: { onDone: () => void }) {
       if (step >= LETTERS.length) {
         clearInterval(tick);
         setTimeout(() => {
-          Animated.timing(fade, { toValue: 0, duration: 180, useNativeDriver: true }).start(onDone);
-        }, 220);
+          Animated.timing(fade, { toValue: 0, duration: 160, useNativeDriver: true }).start(() => {
+            setOpen(false);
+            onDone();
+          });
+        }, 180);
       }
-    }, 90);
+    }, 80);
     return () => clearInterval(tick);
   }, [fade, onDone]);
 
   return (
-    <Animated.View style={[styles.screen, { backgroundColor: colors.bg, opacity: fade }]}>
-      <View style={styles.row}>
-        {LETTERS.slice(0, count).map((letter, index) => (
-          <Text key={index} style={[styles.letter, { color: colors.text }]}>
-            {letter}
-          </Text>
-        ))}
-      </View>
-    </Animated.View>
+    <Modal visible={open} animationType="none" statusBarTranslucent transparent={false}>
+      <Animated.View style={[styles.screen, { backgroundColor: colors.bg, opacity: fade }]}>
+        <Text style={[styles.word, { color: colors.text }]}>{LETTERS.slice(0, count).join('')}</Text>
+      </Animated.View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center', zIndex: 20 },
-  row: { flexDirection: 'row', alignItems: 'center' },
-  letter: { fontFamily: 'Inter_600SemiBold', fontSize: 56, letterSpacing: -1 },
+  screen: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  word: { fontFamily: 'Inter_600SemiBold', fontSize: 56, letterSpacing: -1, textAlign: 'center' },
 });
