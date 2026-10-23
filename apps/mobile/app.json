@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "GiDi Pharmacy Manager",
+    "name": "Pharmacy Manager",
     "slug": "gidi-pharmacy",
     "scheme": "gidi",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -11,9 +11,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.gidi.pharmacy",
-      "buildNumber": "2",
+      "buildNumber": "3",
       "appleTeamId": "H2TL9Q9HNU",
       "infoPlist": {
+        "CFBundleDisplayName": "Pharmacy Manager",
+        "CFBundleName": "Pharmacy Manager",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -36,7 +38,7 @@
         "android.permission.ACCESS_BACKGROUND_LOCATION"
       ],
       "package": "com.gidi.pharmacy",
-      "versionCode": 2
+      "versionCode": 3
     },
     "plugins": [
       [
