@@ -1,5 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
-body {
-  font-family: 'Inter', sans-serif !important;
-}
+/* Inter is loaded from the bundled @expo-google-fonts/inter package on
+ * native (useFonts in _layout). Do not load fonts from fonts.googleapis.com
+ * or any other remote CDN — App Store review treats that as external content.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
