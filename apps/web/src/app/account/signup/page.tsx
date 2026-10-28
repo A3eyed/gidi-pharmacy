@@ -14,6 +14,7 @@
  */
 'use client';
 
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { type FormEvent, Suspense, useState } from 'react';
 import { SocialSignInButtons } from '@/components/SocialSignInButtons';
@@ -24,6 +25,7 @@ function SignUpForm() {
   const callbackUrl = searchParams.get('callbackUrl') || '/';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAdult, setIsAdult] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -31,6 +33,12 @@ function SignUpForm() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    if (!isAdult) {
+      setError('You must confirm you are 16 or older to create an account.');
+      setLoading(false);
+      return;
+    }
 
     // The server backfills `name` from the email local-part when it's missing,
     // so email + password is enough.
@@ -63,12 +71,15 @@ function SignUpForm() {
       >
         <p className="text-xs font-medium tracking-[0.14em] text-[#A3A3A3]">GIDI</p>
         <h1 className="text-2xl font-semibold tracking-tight text-black">Create account</h1>
-        <p className="text-sm leading-5 text-[#737373]">Email and a password are enough to start.</p>
+        <p className="text-sm leading-5 text-[#737373]">
+          Email and a password are enough to start. GiDi is for pharmacy professionals 16 and older.
+        </p>
 
         <label className="flex flex-col gap-1.5 text-sm font-medium text-black">
           Email
           <input
             type="email"
+            name="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -80,6 +91,7 @@ function SignUpForm() {
           Password
           <input
             type="password"
+            name="password"
             required
             minLength={8}
             value={password}
@@ -88,13 +100,36 @@ function SignUpForm() {
           />
         </label>
 
+        <label className="flex items-start gap-2.5 text-sm leading-5 text-[#404040]">
+          <input
+            type="checkbox"
+            name="ageConfirm"
+            required
+            checked={isAdult}
+            onChange={(e) => setIsAdult(e.target.checked)}
+            className="mt-1 h-4 w-4 shrink-0 rounded border-[#D4D4D4]"
+          />
+          <span>
+            I confirm that I am at least 16 years old and that I am creating this account for pharmacy
+            work, not for personal medical use. I agree to the{' '}
+            <Link href="/terms" className="font-medium text-black underline">
+              Terms
+            </Link>{' '}
+            and{' '}
+            <Link href="/privacy" className="font-medium text-black underline">
+              Privacy Policy
+            </Link>
+            .
+          </span>
+        </label>
+
         {error && (
           <div className="rounded-xl border border-[#E5E5E5] bg-[#FAFAFA] p-3 text-sm text-black">{error}</div>
         )}
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !isAdult}
           className="h-12 rounded-xl bg-black text-base font-medium text-white disabled:opacity-50"
         >
           {loading ? 'Creating account…' : 'Continue'}
