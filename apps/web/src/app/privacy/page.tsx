@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
         <h1 className="text-3xl font-semibold tracking-tight text-black">Privacy Policy</h1>
-        <p className="mt-2 text-sm text-[#737373]">Last updated: 6 October 2026</p>
+        <p className="mt-2 text-sm text-[#737373]">Last updated: 28 October 2026</p>
 
         <p className="mt-6 text-sm leading-relaxed text-[#404040]">
           GiDi is a pharmacy management application for inventory, sales and analytics. This policy
@@ -62,6 +62,13 @@ export default function PrivacyPolicyPage() {
               <span>
                 We do <strong className="font-semibold text-black">not</strong> sell, rent or trade
                 your data to anyone.
+              </span>
+            </li>
+            <li className={liClass}>
+              <span className={dotClass} />
+              <span>
+                We do <strong className="font-semibold text-black">not</strong> record session
+                replays or screen video of your use of the app.
               </span>
             </li>
             <li className={liClass}>
@@ -101,7 +108,8 @@ export default function PrivacyPolicyPage() {
           </p>
           <p className={pClass}>
             <strong className="font-semibold text-black">Technical information.</strong> Standard
-            session data needed to keep you signed in, and error reports if something crashes.
+            session data needed to keep you signed in, and crash or error reports if something
+            fails (stack traces and device type only — not a video of your screen).
           </p>
         </section>
 
@@ -127,6 +135,10 @@ export default function PrivacyPolicyPage() {
               <span className={dotClass} />
               <span>Advertising identifiers or cross-app tracking data.</span>
             </li>
+            <li className={liClass}>
+              <span className={dotClass} />
+              <span>Session replay, heatmaps, or continuous screen recording.</span>
+            </li>
           </ul>
         </section>
 
@@ -145,6 +157,17 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section className={sectionClass}>
+          <h2 className={h2Class}>Email</h2>
+          <p className={pClass}>
+            We may send transactional messages required to run your account (for example password
+            reset or security notices). We do <strong className="font-semibold text-black">not</strong>{' '}
+            send marketing, promotional, or newsletter email. If that ever changes, every marketing
+            message will include a working unsubscribe link and our postal contact address, as
+            required by law.
+          </p>
+        </section>
+
+        <section className={sectionClass}>
           <h2 className={h2Class}>Azara and third parties</h2>
           <p className={pClass}>
             <strong className="font-semibold text-black">
@@ -156,7 +179,7 @@ export default function PrivacyPolicyPage() {
           </p>
           <p className={pClass}>
             Restock briefings are calculated on our server from your own sales history and stock
-            levels. The only external call is your pharmacy&apos;s city being sent to a weather
+            levels. The only external call is your pharmacy's city being sent to a weather
             service to retrieve current conditions, which is used as a demand signal. No medication
             or sales data is included in that request.
           </p>
@@ -173,13 +196,13 @@ export default function PrivacyPolicyPage() {
           <p className={pClass}>
             Your data is held in an encrypted, access-controlled PostgreSQL database. Traffic
             between the app and our servers is encrypted in transit using HTTPS. On mobile, your
-            session token is kept in the device&apos;s secure keystore (iOS Keychain / Android
+            session token is kept in the device's secure keystore (iOS Keychain / Android
             Keystore).
           </p>
           <p className={pClass}>
             Every request is scoped to your account: the server checks ownership before returning
             any pharmacy, medication, sale or report, so one account can never read another
-            account&apos;s data.
+            account's data.
           </p>
         </section>
 
@@ -221,7 +244,8 @@ export default function PrivacyPolicyPage() {
           <h2 className={h2Class}>Children</h2>
           <p className={pClass}>
             GiDi is a professional tool intended for pharmacy owners and staff. It is not directed
-            at children and we do not knowingly collect information from anyone under 16.
+            at children and we do not knowingly collect information from anyone under 16. Account
+            creation requires an age confirmation.
           </p>
         </section>
 
@@ -236,7 +260,8 @@ export default function PrivacyPolicyPage() {
         <section className={sectionClass}>
           <h2 className={h2Class}>Contact</h2>
           <p className={pClass}>
-            Questions about privacy or your data can be sent to Abdallah Fuseini, the builder of GiDi, at the support email listed on the GiDi App Store listing. The terms are at{' '}
+            Questions about privacy or your data can be sent to Abdallah Fuseini, the builder of
+            GiDi, at the support email listed on the GiDi App Store listing. The terms are at{' '}
             <Link href="/terms" className="font-medium text-black underline">
               /terms
             </Link>
