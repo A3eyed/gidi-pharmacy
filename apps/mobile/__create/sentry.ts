@@ -65,6 +65,19 @@ export function initSentry(): void {
     Sentry.init({
       dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
       enableNativeCrashHandling: true,
+      // Crash reports only. Never record session replay / screen video without
+      // an explicit, separate user consent flow (not present in GiDi).
+      tracesSampleRate: 0,
+      enableAutoSessionTracking: false,
+      // @ts-expect-error session replay options vary by SDK version; force off
+      replaysSessionSampleRate: 0,
+      // @ts-expect-error see above
+      replaysOnErrorSampleRate: 0,
+      integrations: (defaults) =>
+        defaults.filter((integration) => {
+          const name = integration.name ?? '';
+          return !/replay/i.test(name);
+        }),
       beforeSend: (event) => {
         forwardEventToRemote(event);
         return event;
