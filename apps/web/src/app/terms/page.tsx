@@ -29,7 +29,7 @@ export default function TermsPage() {
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
         <h1 className="text-3xl font-semibold tracking-tight text-black">Terms and conditions</h1>
-        <p className="mt-2 text-sm text-[#737373]">Last updated: 6 October 2026</p>
+        <p className="mt-2 text-sm text-[#737373]">Last updated: 28 October 2026</p>
         <p className="mt-6 text-sm leading-relaxed text-[#404040]">
           These terms cover use of GiDi, the pharmacy management app and website built by Abdallah
           Fuseini. By creating an account or continuing past the sample screens, you agree to them.
@@ -41,6 +41,15 @@ export default function TermsPage() {
             GiDi is a tool for a pharmacy to keep a medication catalogue, record sales, see stock
             and expiry warnings, and look up general reference answers through Azara. It is a
             business record, not a patient record system and not a medical device.
+          </p>
+        </section>
+
+        <section className={sectionClass}>
+          <h2 className={h2Class}>Age requirement</h2>
+          <p className={pClass}>
+            GiDi is for pharmacy owners and staff who are at least 16 years old. By creating an
+            account you confirm you meet that age. We do not knowingly collect personal information
+            from anyone under 16.
           </p>
         </section>
 
@@ -84,6 +93,17 @@ export default function TermsPage() {
         </section>
 
         <section className={sectionClass}>
+          <h2 className={h2Class}>Paid features and renewals</h2>
+          <p className={pClass}>
+            If you buy a subscription through the App Store or Google Play, payment is charged to
+            your store account at confirmation. Subscriptions renew automatically unless you turn
+            auto-renew off at least 24 hours before the end of the current period. Manage or cancel
+            in your device's subscription settings. Any price change is shown in the store
+            before you confirm. Refunds follow Apple's or Google's rules.
+          </p>
+        </section>
+
+        <section className={sectionClass}>
           <h2 className={h2Class}>Availability</h2>
           <p className={pClass}>
             GiDi is provided as available. A phone without a connection may show saved stock, and
@@ -107,6 +127,36 @@ export default function TermsPage() {
             counts, pricing, and compliance with pharmacy law where you operate. To the extent the
             law allows, Abdallah Fuseini is not liable for lost profit, a dispensing error, or a
             record you failed to export before deletion.
+          </p>
+        </section>
+
+        <section className={sectionClass}>
+          <h2 className={h2Class}>Copyright and DMCA</h2>
+          <p className={pClass}>
+            GiDi and its branding, interface, and documentation are owned by Abdallah Fuseini. If
+            you believe material on GiDi infringes your copyright, send a notice under the Digital
+            Millennium Copyright Act (17 U.S.C. § 512) to the designated agent below. The notice
+            should include: (1) your contact details; (2) a description of the copyrighted work; (3)
+            the URL or location of the material you claim is infringing; (4) a statement that you
+            have a good-faith belief the use is not authorised; (5) a statement under penalty of
+            perjury that the information is accurate and that you are the owner or authorised to
+            act; and (6) your physical or electronic signature.
+          </p>
+          <p className={pClass}>
+            <strong className="font-semibold text-black">DMCA designated agent</strong>
+            <br />
+            Abdallah Fuseini
+            <br />
+            GiDi / Pharmacy Manager
+            <br />
+            Email: the support address published on the GiDi App Store listing
+            <br />
+            Subject line: DMCA Notice — GiDi
+          </p>
+          <p className={pClass}>
+            On a valid notice we will review and may remove or disable access to the material and
+            notify the user who posted it. Counter-notices may be submitted under the same contact
+            details.
           </p>
         </section>
 
