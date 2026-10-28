@@ -29,11 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link
-          rel="stylesheet"
-          href="/fontawesome/releases/v6.3.0/css/pro.min.css?token=2c15cc0cc7"
-        />
-        {/* Apply the saved theme before paint to avoid a light/dark flash */}
+        {/* No remote stylesheets or CDN fonts — icons use lucide-react; type uses system UI. */}
         <script>{`
           (function () {
             try {
@@ -52,7 +48,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           })();
         `}</script>
       </head>
-      <body suppressHydrationWarning>
+      <body
+        suppressHydrationWarning
+        style={{
+          fontFamily:
+            'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        }}
+      >
         <Providers>{children}</Providers>
         <DesktopInstall />
       </body>
