@@ -29,7 +29,7 @@ export default function TermsPage() {
 
       <main className="mx-auto max-w-3xl px-5 pb-20 pt-10">
         <h1 className="text-3xl font-semibold tracking-tight text-black">Terms and conditions</h1>
-        <p className="mt-2 text-sm text-[#737373]">Last updated: 28 October 2026</p>
+        <p className="mt-2 text-sm text-[#737373]">Last updated: 31 October 2026</p>
         <p className="mt-6 text-sm leading-relaxed text-[#404040]">
           These terms cover use of GiDi, the pharmacy management app and website built by Abdallah
           Fuseini. By creating an account or continuing past the sample screens, you agree to them.
@@ -47,9 +47,10 @@ export default function TermsPage() {
         <section className={sectionClass}>
           <h2 className={h2Class}>Age requirement</h2>
           <p className={pClass}>
-            GiDi is for pharmacy owners and staff who are at least 16 years old. By creating an
-            account you confirm you meet that age. We do not knowingly collect personal information
-            from anyone under 16.
+            GiDi is a business tool for pharmacy owners and adult staff. You must be at least 18
+            years old to create an account or use the service. By creating an account you confirm
+            you meet that age. We do not knowingly collect personal information from anyone under
+            18.
           </p>
         </section>
 
@@ -98,8 +99,8 @@ export default function TermsPage() {
             If you buy a subscription through the App Store or Google Play, payment is charged to
             your store account at confirmation. Subscriptions renew automatically unless you turn
             auto-renew off at least 24 hours before the end of the current period. Manage or cancel
-            in your device's subscription settings. Any price change is shown in the store
-            before you confirm. Refunds follow Apple's or Google's rules.
+            in your device&apos;s subscription settings. Any price change is shown in the store
+            before you confirm. Refunds follow Apple&apos;s or Google&apos;s rules.
           </p>
         </section>
 

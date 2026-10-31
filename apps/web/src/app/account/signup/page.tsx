@@ -35,7 +35,7 @@ function SignUpForm() {
     setError(null);
 
     if (!isAdult) {
-      setError('You must confirm you are 16 or older to create an account.');
+      setError('You must confirm you are 18 or older to create an account.');
       setLoading(false);
       return;
     }
@@ -72,7 +72,8 @@ function SignUpForm() {
         <p className="text-xs font-medium tracking-[0.14em] text-[#A3A3A3]">GIDI</p>
         <h1 className="text-2xl font-semibold tracking-tight text-black">Create account</h1>
         <p className="text-sm leading-5 text-[#737373]">
-          Email and a password are enough to start. GiDi is for pharmacy professionals 16 and older.
+          Email and a password are enough to start. GiDi is a pharmacy business tool for adults 18
+          and older.
         </p>
 
         <label className="flex flex-col gap-1.5 text-sm font-medium text-black">
@@ -110,7 +111,7 @@ function SignUpForm() {
             className="mt-1 h-4 w-4 shrink-0 rounded border-[#D4D4D4]"
           />
           <span>
-            I confirm that I am at least 16 years old and that I am creating this account for pharmacy
+            I confirm that I am at least 18 years old and that I am creating this account for pharmacy
             work, not for personal medical use. I agree to the{' '}
             <Link href="/terms" className="font-medium text-black underline">
               Terms
