@@ -1,0 +1,22 @@
+name: Fix yarn.lock
+on:
+  workflow_dispatch:
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Strip stale lock entries
+        run: node apps/mobile/scripts/strip-stale-lock.js
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add yarn.lock .yarnrc.yml || true
+          git diff --staged --quiet || git commit -m "chore: sync yarn.lock (remove RevenueCat)"
+          git push
