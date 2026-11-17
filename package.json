@@ -3,7 +3,7 @@
   "author": "Abdallah Fuseini",
   "private": true,
   "scripts": {
-    "eas-build-pre-install": "corepack enable && node .yarn/releases/yarn-4.12.0.cjs --version"
+    "eas-build-pre-install": "corepack enable && yarn config set enableImmutableInstalls false && node .yarn/releases/yarn-4.12.0.cjs --version"
   },
   "workspaces": [
     "apps/*"
