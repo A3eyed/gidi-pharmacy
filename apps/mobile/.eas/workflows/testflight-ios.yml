@@ -1,0 +1,24 @@
+name: iOS TestFlight
+
+# Run from expo.dev → Workflows, or when labeled on a PR.
+on:
+  workflow_dispatch: {}
+  pull_request_labeled:
+    labels:
+      - eas-testflight-ios
+
+jobs:
+  build_ios:
+    name: Production iOS build
+    type: build
+    params:
+      platform: ios
+      profile: production
+
+  submit_ios:
+    name: Submit to TestFlight
+    type: submit
+    needs: [build_ios]
+    params:
+      platform: ios
+      profile: production
