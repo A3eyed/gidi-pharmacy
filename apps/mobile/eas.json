@@ -14,6 +14,7 @@
       "env": {
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
         "EXPO_USE_PRECOMPILED_MODULES": "0",
+        "YARN_ENABLE_IMMUTABLE_INSTALLS": "false",
         "EXPO_PUBLIC_BASE_URL": "https://gidi-pharmacy.vercel.app",
         "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidi-pharmacy.vercel.app"
       }
@@ -27,6 +28,7 @@
       "env": {
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
         "EXPO_USE_PRECOMPILED_MODULES": "0",
+        "YARN_ENABLE_IMMUTABLE_INSTALLS": "false",
         "EXPO_PUBLIC_BASE_URL": "https://gidi-pharmacy.vercel.app",
         "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidi-pharmacy.vercel.app"
       }
@@ -43,6 +45,7 @@
       "env": {
         "SENTRY_DISABLE_AUTO_UPLOAD": "true",
         "EXPO_USE_PRECOMPILED_MODULES": "0",
+        "YARN_ENABLE_IMMUTABLE_INSTALLS": "false",
         "EXPO_PUBLIC_BASE_URL": "https://gidi-pharmacy.vercel.app",
         "EXPO_PUBLIC_PROXY_BASE_URL": "https://gidi-pharmacy.vercel.app"
       }
