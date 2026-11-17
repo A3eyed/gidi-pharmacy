@@ -5132,29 +5132,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@revenuecat/purchases-js-hybrid-mappings@npm:17.12.0":
-  version: 17.12.0
-  resolution: "@revenuecat/purchases-js-hybrid-mappings@npm:17.12.0"
-  dependencies:
-    "@revenuecat/purchases-js": "npm:1.17.0"
-  checksum: 10c0/3da975b7ff7b6b4be9d78d87b7c83914d4ad8774f6f90cf4b1501ba4a46954830e7e2cc93f7516ca4b5114cdd96c0ff1fb389335c07d4e6b00e2bb9223c32278
-  languageName: node
-  linkType: hard
-
-"@revenuecat/purchases-js@npm:1.17.0":
-  version: 1.17.0
-  resolution: "@revenuecat/purchases-js@npm:1.17.0"
-  checksum: 10c0/51d274bc582a94a59c6ac0c6f5328ae97ef03f3c9b0e620e1a1485268286bddce521c07a84c0574c70d3639d7791563b18613e63da7b1bff916552025c8b1f18
-  languageName: node
-  linkType: hard
-
-"@revenuecat/purchases-typescript-internal@npm:17.12.0":
-  version: 17.12.0
-  resolution: "@revenuecat/purchases-typescript-internal@npm:17.12.0"
-  checksum: 10c0/d27183a662edf3495e4f6d6658ff01f3c83ec79021641c45d6fa0adb397834ea93d2804ddc53992f995ea3c75e19cd49d75836f6e175d7b3917b839bd3c0b42d
-  languageName: node
-  linkType: hard
-
 "@rollup/rollup-android-arm-eabi@npm:4.62.5":
   version: 4.62.5
   resolution: "@rollup/rollup-android-arm-eabi@npm:4.62.5"
@@ -12944,8 +12921,6 @@ __metadata:
     react-native-gesture-handler: "npm:~2.32.0"
     react-native-graph: "npm:1.1.0"
     react-native-maps: "npm:1.20.1"
-    react-native-purchases: "npm:9.6.1"
-    react-native-purchases-ui: "npm:9.6.1"
     react-native-reanimated: "npm:4.5.1"
     react-native-reanimated-carousel: "npm:4.0.2"
     react-native-safe-area-context: "npm:~5.7.0"
@@ -14459,40 +14434,6 @@ __metadata:
     react-native-web:
       optional: true
   checksum: 10c0/59c8d5600feb907df179c675b7185ef3bf205bdc85391c7ef530bb17d56d44d03ffd9ab3ae08dcc00cfabe9b14e37041327c7446114104b141efb2c8d4c3e797
-  languageName: node
-  linkType: hard
-
-"react-native-purchases-ui@npm:9.6.1":
-  version: 9.6.1
-  resolution: "react-native-purchases-ui@npm:9.6.1"
-  dependencies:
-    "@revenuecat/purchases-typescript-internal": "npm:17.12.0"
-  peerDependencies:
-    react: "*"
-    react-native: ">= 0.73.0"
-    react-native-purchases: 9.6.1
-    react-native-web: "*"
-  peerDependenciesMeta:
-    react-native-web:
-      optional: true
-  checksum: 10c0/3cf0e0eaa73862a05c5aa880d4b00d70bd7f2fb2231e409ba6ba0d5e99dcfbf34fbbd2d58ae9ab604c6658e9de1686bfe0bd52ea3a4a4fb96310731ba625233f
-  languageName: node
-  linkType: hard
-
-"react-native-purchases@npm:9.6.1":
-  version: 9.6.1
-  resolution: "react-native-purchases@npm:9.6.1"
-  dependencies:
-    "@revenuecat/purchases-js-hybrid-mappings": "npm:17.12.0"
-    "@revenuecat/purchases-typescript-internal": "npm:17.12.0"
-  peerDependencies:
-    react: ">= 16.6.3"
-    react-native: ">= 0.73.0"
-    react-native-web: "*"
-  peerDependenciesMeta:
-    react-native-web:
-      optional: true
-  checksum: 10c0/8e49e393a745ef3703df5a47870673d62cc8937571c78794aec9c5af4368c1a21e05c77ca730964c9caf1992cf3caabbc83b884c665cb2f0a74ee482fdc8e212
   languageName: node
   linkType: hard
 
