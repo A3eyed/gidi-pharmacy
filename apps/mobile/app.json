@@ -3,7 +3,7 @@
     "name": "Pharmacy Manager",
     "slug": "gidi-pharmacy",
     "scheme": "gidi",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -63,7 +63,8 @@
         "expo-build-properties",
         {
           "ios": {
-            "useFrameworks": "static"
+            "useFrameworks": "static",
+            "enableSceneSupport": true
           }
         }
       ],
